@@ -1,0 +1,14 @@
+{
+  "name": "rcox.greenriverdev.com/IT328/chicken",
+  "authors":
+  [
+    {
+      "name": "Robert Cox",
+      "email": "rcox18@mail.greenriver.edu"
+    }
+  ],
+  "require":
+  {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
