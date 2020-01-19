@@ -16,7 +16,7 @@
 }
 
 .row {
-    min-height: 75vh;
+    min-height: 65vh;
 }
 
 /*font control inspired by
@@ -25,9 +25,6 @@ html {
     font-size: 0.6rem;
 }
 @media (min-width: 576px) {
-    .background-image {
-        height: 70%;
-    }
     html { font-size: 0.75rem; }
 }
 @media (min-width: 800px) {
