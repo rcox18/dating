@@ -1,8 +1,16 @@
-
+@charset "UTF-8";
+/**
+ * @author     Robert Cox
+ * @version    1.0.0
+ * @link       http://rcox.greenriverdev.com/IT328/chicken
+ * @since      1/19/2020
+ *
+ * Styling for for a monster dating website.
+ */
 
 .background-image {
-    background-image: url('../images/monster-date-1.png');
-    height: 70%;
+    background-image: url('../images/smiley-monster.jpg');
+    height: 100%;
     background-size: cover;
     background-position: center;
 }
@@ -16,7 +24,10 @@ https://stackoverflow.com/questions/48572331/how-to-create-responsive-text-in-bo
 html {
     font-size: 0.6rem;
 }
-@media (min-width: 400px) {
+@media (min-width: 576px) {
+    .background-image {
+        height: 70%;
+    }
     html { font-size: 0.75rem; }
 }
 @media (min-width: 800px) {
