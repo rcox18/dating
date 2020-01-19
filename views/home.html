@@ -1,8 +1,9 @@
 <!--
     Robert Cox
-	/19/2020
+	1/19/2020
 	url: http://rcox.greenriverdev.com/IT328/dating
-	The home page view for rcox.greenriverdev.com/IT328/dating. A dating website for monsters.
+	The home page view for rcox.greenriverdev.com/IT328/dating. A dating website
+	for monsters.
 -->
 
 <!DOCTYPE html>
@@ -17,7 +18,8 @@
         <title>MonsterFinder</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm fixed-top bg-light border-bottom mb-sm-2">
+        <!--Navigation Bar-->
+        <nav class="navbar navbar-expand-sm fixed-top bg-light border-bottom">
             <a class="navbar-brand" href="#">MonsterFinder</a>
             <ul class="navbar-nav text-right">
                 <li class="nav-item">
@@ -29,34 +31,52 @@
             </ul>
         </nav>
         <hr class="mb-5">
+        <!--Container with 1 row and two columns, stacked on small devices-->
         <div class="container-fluid p-5">
             <div class="row p-3 border rounded">
-                <div class="col-sm-7 p-0">
+                <div class="col-sm-7 p-0 order-sm-12">
                     <div class="background-image rounded"></div>
                 </div>
 
-                <div class="col-sm-5">
+                <div class="col-sm-5 order-sm-1">
                     <h1 class="text-center">MonsterFinder</h1>
-                    <p>Begin by creating a new project in GitHub called ‘dating’. Make sure your project has a
-                        readme file. Clone your project to your 328 directory on greenriverdev. Commit frequently,
-                        and make sure that your commits have a meaningful comment. You should have a minimum of 5
-                        commits for this assignment.</p>
-
-                    <h4 class="text-center">Our Monster Members Love MonsterFinder</h4>
+                    <p>Welcome to MonsterFinder! In a world that's dominated by
+                       humans, there is now a place where you can come out of
+                       the closet, the shadows, and from under the bed. At
+                       MonsterFinder you can connect with others just like
+                       you!</p>
+                    <h4 class="text-center">
+                        Our Monster Members Love MonsterFinder
+                    </h4>
                     <hr>
-                    <div class="container">
-                        <em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, quasi!" <span>-&nbspAlison&nbspS</span>.</em><br>
-                        <em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, quasi!" <span>-&nbspBraker&nbspC.</span></em><br>
-                        <em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, quasi!" <span>-&nbspDracora&nbspM.</span></em><br>
+                    <div class="container px-4">
+                        <em>"I met the creepiest monster ever...
+                            it was wonderful!"
+                            <span>-&nbspAlison&nbspS.</span>
+                        </em>
+                        <br>
+                        <em>"I'll never dine on humans alone again, thanks to
+                            MonsterFinder!"
+                            <span>-&nbspBraker&nbspC.</span>
+                        </em>
+                        <br>
+                        <em>"With MonsterFinder, you can find local monsters to
+                            terrorize the neighborhood."
+                            <span>-&nbspDracora&nbspM.</span>
+                        </em>
+                        <br>
                     </div>
                     <hr>
                     <div class="text-center">
-                        <button class="btn-success rounded" type = "button">Join Now!</button>
+                        <button class="btn-success rounded" type = "button"
+                                id="join-btn">
+                            Join Now!
+                        </button>
                     </div>
                 </div>
             </div>
-
         </div>
+        <!--jQuery, popper, and Bootstrap JS-->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
                 integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
                 crossorigin="anonymous"></script>
@@ -66,7 +86,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
                 integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
                 crossorigin="anonymous">
-
         </script>
     </body>
 </html>

@@ -1,11 +1,14 @@
 <?php
 /**
+ *  An index controller page for rcox.greenriverdev.com/IT328/dating.
+ *
  * @author     Robert Cox
  * @version    1.0.0
- * @link       http://rcox.greenriverdev.com/IT328/chicken
+ * @link       http://rcox.greenriverdev.com/IT328/dating
  * @since      1/19/2020
  */
 
+// error reporting turned on
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
