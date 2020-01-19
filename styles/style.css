@@ -1,0 +1,27 @@
+
+
+.background-image {
+    background-image: url('../images/monster-date-1.png');
+    height: 70%;
+    background-size: cover;
+    background-position: center;
+}
+
+.row {
+    height: 75vh;
+}
+
+/*font control inspired by
+https://stackoverflow.com/questions/48572331/how-to-create-responsive-text-in-bootstrap-4 */
+html {
+    font-size: 0.6rem;
+}
+@media (min-width: 400px) {
+    html { font-size: 0.75rem; }
+}
+@media (min-width: 800px) {
+    html { font-size: 1rem; }
+}
+@media (min-width: 992px) {
+    html { font-size: 1rem; }
+}
