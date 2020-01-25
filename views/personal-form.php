@@ -1,4 +1,3 @@
-
 <include href="php/htmlHead.php"></include>
     <include href="php/site-nav-bar.php"></include>
     <div class="container-fluid p-5">
@@ -17,38 +16,39 @@
                     </div>
                     <div class="col-sm-8 order-sm-1">
                         <div class="form-group">
-                            <label for="first-name">First Name:</label>
+                            <label for="first-name"><strong>First Name:</strong></label>
                             <input type="text" class="form-control"
                                    placeholder="Enter first name"
                                    name="first-name" id="first-name">
                         </div>
                         <div class="form-group">
-                            <label for="last-name">Last Name:</label>
+                            <label for="last-name"><strong>Last Name:</strong></label>
                             <input type="text" class="form-control"
                                    placeholder="Enter last name"
                                    name="last-name" id="last-name">
                         </div>
                         <div class="form-group">
-                            <label for="age">Age:</label>
+                            <label for="age"><strong>Age:</strong></label>
                             <input type="number" class="form-control" id="age"
                                    placeholder="Enter age" name="age">
                         </div>
-                        <div class="form-group form-check">
+                        <label for="genders"><strong>Gender:</strong></label>
+                        <div class="form-group form-check pl-0" id="genders">
                             <label for="gender-m" class="form-check-label ml-4">
                                 <input class="form-check-input" type="radio"
-                                       name="gender" id="gender-m"> Female
+                                       name="gender" id="gender-m" value="female"> Female
                             </label>
                             <label for="gender-f" class="form-check-label ml-4">
                                 <input for="gender" class="form-check-input" type="radio"
-                                       name="gender" id="gender-f"> Male
+                                       name="gender" id="gender-f" value="male"> Male
                             </label>
                             <label for="gender-o" class="form-check-label ml-4">
                                 <input class="form-check-input" type="radio"
-                                       name="gender" id="gender-o"> Other
+                                       name="gender" id="gender-o" value="other"> Other
                             </label>
                         </div>
                         <div class="form-group">
-                            <label for="phone">Phone Number:</label>
+                            <label for="phone"><strong>Phone Number:</strong></label>
                             <input type="tel" class="form-control"
                                    placeholder="Enter phone number"
                                    id="phone" name="phone">
