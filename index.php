@@ -15,11 +15,10 @@ error_reporting(E_ALL);
 
 //require autoload.php
 require ("vendor/autoload.php");
-require ("php/functions.php");
 //instantiate fat-free
 $f3 = Base::instance();
 
-//define default route
+//define routes and set the session values
 $f3->route("GET /", function (){
     $_SESSION["page"] = "Monster Finder";
     $view = new Template();
@@ -41,10 +40,6 @@ $f3->route("POST /profile-form", function (){
     $_SESSION["phone"] = $_POST["phone"];
     $view = new Template();
     echo $view->render("views/profile-form.php");
-    /*--------------DELETE-------------*/
-    var_dump($_POST);
-    echo "<br>";
-    var_dump($_SESSION);
 });
 
 $f3->route("POST /interests-form", function (){
@@ -55,10 +50,6 @@ $f3->route("POST /interests-form", function (){
     $_SESSION["page"] = "Interests";
     $view = new Template();
     echo $view->render("views/interests-form.php");
-    /*--------------DELETE-------------*/
-    var_dump($_POST);
-    echo "<br>";
-    var_dump($_SESSION);
 });
 
 $f3->route("POST /profile-summary", function (){
@@ -74,10 +65,6 @@ $f3->route("POST /profile-summary", function (){
     }
     $view = new Template();
     echo $view->render("views/profile-summary.php");
-    /*--------------DELETE-------------*/
-    var_dump($_POST);
-    echo "<br>";
-    var_dump($_SESSION);
 });
 //run fat free
 $f3->run();
