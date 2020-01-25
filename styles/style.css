@@ -15,6 +15,16 @@
     background-position: center;
 }
 
+@media (max-width: 576px) {
+    .bkgd-img {
+        height: 175px;
+    }
+}
+
+hr {
+    border-top: 1px solid #bbbbbb;
+}
+
 #privacy-note {
     background-color: #b3b7bb;
 }
@@ -26,7 +36,7 @@
 /*font control inspired by
 https://stackoverflow.com/questions/48572331/how-to-create-responsive-text-in-bootstrap-4 */
 html {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
 }
 @media (min-width: 576px) {
     html { font-size: 0.75rem; }
@@ -34,6 +44,4 @@ html {
 @media (min-width: 800px) {
     html { font-size: 1rem; }
 }
-@media (min-width: 992px) {
-    html { font-size: 1rem; }
-}
+

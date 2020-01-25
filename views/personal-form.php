@@ -4,8 +4,8 @@
     <div class="container-fluid p-5">
         <div class="row p-3 border rounded">
             <h1>Personal</h1>
-            <hr>
             <form action="profile-form" method="POST" class="col-12">
+                <hr>
                 <div class="row">
                     <div class="col-sm-4 order-sm-12">
                         <p class="border-primary rounded p-2 text-center"

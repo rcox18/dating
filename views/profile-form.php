@@ -4,8 +4,8 @@
     <div class="container-fluid p-5">
         <div class="row p-3 border rounded">
             <h1>Profile</h1>
-            <hr>
-            <form action="profile-form" method="POST" class="col-12">
+            <form action="interests-form" method="POST" class="col-12">
+                <hr>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -15,12 +15,10 @@
                                    name="email" id="email">
                         </div>
                         <div class="form-group">
-                            <label for="State">State:</label>
-                            <select class="form-control" id="sel1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
+                            <label for="state">State:</label>
+                            <select class="form-control" id="state">
+                                <option>1</option><option>2</option>
+                                <!--use loop with state array.php-->
                             </select>
                         </div>
                         <label for="seeking-group">Seeking:</label>
