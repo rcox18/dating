@@ -15,7 +15,11 @@
     background-position: center;
 }
 
-.row {
+#privacy-note {
+    background-color: #b3b7bb;
+}
+
+.home-row {
     min-height: 65vh;
 }
 

@@ -1,14 +1,10 @@
 
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-             <meta name="viewport"
-                   content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-                         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-             <title>Document</title>
-</head>
-<body>
-<p>interests</p>
-</body>
-</html>
+<include href="php/htmlHead.php"></include>
+    <include href="php/site-nav-bar.php"></include>
+    <div class="container-fluid p-5">
+        <div class="row p-3 border rounded">
+            <p>interests</p>
+        </div>
+    </div>
+<include href="php/htmlBSjsJQuery.php"></include>
+

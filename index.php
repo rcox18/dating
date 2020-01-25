@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  *  An index controller page for rcox.greenriverdev.com/IT328/dating.
  *

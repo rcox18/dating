@@ -5,35 +5,11 @@
 	The home page view for rcox.greenriverdev.com/IT328/dating. A dating website
 	for monsters.
 -->
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-              rel="stylesheet"
-              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="styles/style.css">
-        <title>MonsterFinder</title>
-    </head>
-    <body>
-        <!--Navigation Bar-->
-        <nav class="navbar navbar-expand fixed-top bg-light border-bottom">
-            <a class="navbar-brand text-dark" href="#">MonsterFinder</a>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Sign up</a>
-                </li>
-            </ul>
-        </nav>
-        <hr class="mb-5">
+<include href="php/htmlHead.php"></include>
+    <include href="php/site-nav-bar.php"></include>
         <!--Container with 1 row and two columns, stacked on small devices-->
         <div class="container-fluid p-5">
-            <div class="row p-3 border rounded">
+            <div class="row p-3 border rounded home-row">
                 <div class="col-sm-7 p-0 order-sm-12">
                     <div class="background-image rounded"></div>
                 </div>
@@ -76,16 +52,4 @@
                 </div>
             </div>
         </div>
-        <!--jQuery, popper, and Bootstrap JS-->
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-                crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-                crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-                integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-                crossorigin="anonymous">
-        </script>
-    </body>
-</html>
+    <include href="php/htmlBSjsJQuery.php"></include>
