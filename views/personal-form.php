@@ -34,17 +34,17 @@
                                    placeholder="Enter age" name="age">
                         </div>
                         <div class="form-group form-check">
-                            <label class="form-check-label ml-4">
+                            <label for="gender-m" class="form-check-label ml-4">
                                 <input class="form-check-input" type="radio"
-                                       name="gender"> Female
+                                       name="gender" id="gender-m"> Female
                             </label>
-                            <label class="form-check-label ml-4">
-                                <input class="form-check-input" type="radio"
-                                       name="gender" > Male
+                            <label for="gender-f" class="form-check-label ml-4">
+                                <input for="gender" class="form-check-input" type="radio"
+                                       name="gender" id="gender-f"> Male
                             </label>
-                            <label class="form-check-label ml-4">
+                            <label for="gender-o" class="form-check-label ml-4">
                                 <input class="form-check-input" type="radio"
-                                       name="gender" > Other
+                                       name="gender" id="gender-o"> Other
                             </label>
                         </div>
                         <div class="form-group">
