@@ -24,6 +24,14 @@ $f3->route("GET /", function (){
     $view = new Template();
     echo $view->render("views/home.html");
 });
+// so I can open the site from the editor
+$f3->route("GET /@item", function ($f3, $params){
+    if ($params["item"] == "index.php") {
+        $_SESSION["page"] = "Monster Finder";
+        $view = new Template();
+        echo $view->render("views/home.html");
+    }
+});
 
 $f3->route("GET /personal-form", function (){
     $_SESSION["page"] = "Personal";
@@ -52,19 +60,25 @@ $f3->route("POST /interests-form", function (){
     echo $view->render("views/interests-form.php");
 });
 
-$f3->route("POST /profile-summary", function (){
-    $_SESSION["indoorInterests"] = $_POST["indoor-interests"];
-    $_SESSION["outdoorInterests"] = $_POST["outdoor-interests"];
-    $_SESSION["interests"] ="";
+$f3->route("POST /profile-summary", function () {
     $_SESSION["page"] = "Summary";
-    foreach ($_SESSION["indoorInterests"] AS $v) {
-        $_SESSION["interests"] = $_SESSION["interests"]." $v";
+    $_SESSION["interests"] ="";
+    if (!empty($_POST["indoor-interests"])) {
+        $_SESSION["indoorInterests"] = $_POST["indoor-interests"];
+        foreach ($_SESSION["indoorInterests"] AS $v) {
+            $_SESSION["interests"] = $_SESSION["interests"] . " $v";
+        }
     }
-    foreach ($_SESSION["outdoorInterests"] AS $v) {
-        $_SESSION["interests"] = $_SESSION["interests"]." $v";
+
+    if (!empty($_POST["outdoor-interests"])) {
+        $_SESSION["outdoorInterests"] = $_POST["outdoor-interests"];
+        foreach ($_SESSION["outdoorInterests"] AS $v) {
+            $_SESSION["interests"] = $_SESSION["interests"] . " $v";
+        }
     }
     $view = new Template();
     echo $view->render("views/profile-summary.php");
 });
+
 //run fat free
 $f3->run();

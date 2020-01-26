@@ -1,3 +1,11 @@
+<!--
+    Robert Cox
+	1/26/2020
+	url: http://rcox.greenriverdev.com/IT328/dating/{view = /profile-summary}
+	The profile summary page view for rcox.greenriverdev.com/IT328/dating.
+	A dating website for monsters.
+-->
+
 <include href="php/htmlHead.php"></include>
     <include href="php/site-nav-bar.php"></include>
     <div class="container-fluid p-5">
@@ -5,7 +13,7 @@
             <div class="col-sm-6 order-sm-2">
                 <div class="row">
                     <img src="images/smiley-monster.jpg" class="rounded"
-                         alt="smiling monster">
+                         alt="smiling monster" id="profile-pic">
                 </div>
                 <hr>
                 <h3>Biography</h3>

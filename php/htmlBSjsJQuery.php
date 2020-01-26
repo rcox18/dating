@@ -1,3 +1,10 @@
+<!--
+    Robert Cox
+	1/26/2020
+	url: http://rcox.greenriverdev.com/IT328/dating
+	This file adds all of the javaScript and closes the document.
+-->
+
 <!--jQuery, popper, and Bootstrap JS-->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

@@ -33,6 +33,10 @@ hr {
     min-height: 65vh;
 }
 
+#profile-pic {
+    width: 100%;
+}
+
 /*font control inspired by
 https://stackoverflow.com/questions/48572331/how-to-create-responsive-text-in-bootstrap-4 */
 html {
