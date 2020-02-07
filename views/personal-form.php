@@ -11,7 +11,7 @@
     <div class="container-fluid p-5">
         <div class="row p-3 border rounded">
             <h1>Personal</h1>
-            <form action="profile-form" method="POST" class="col-12">
+            <form action="#" method="POST" class="col-12">
                 <hr>
                 <div class="row">
                     <div class="col-sm-4 order-sm-12">
@@ -25,26 +25,38 @@
                     <div class="col-sm-8 order-sm-1">
                         <div class="form-group">
                             <label for="first-name">
-                                <strong>First Name:</strong>
+                                <strong>First Name: </strong>
                             </label>
+                            <check if="{{ @errors['fName'] }}">
+                                <span class="err">{{ @errors['fName'] }}</span>
+                            </check>
                             <input type="text" class="form-control"
                                    placeholder="Enter first name"
-                                   name="first-name" id="first-name">
+                                   name="first-name" id="first-name"
+                                   value="{{ @firstName }}">
                         </div>
                         <div class="form-group">
                             <label for="last-name">
-                                <strong>Last Name:</strong>
+                                <strong>Last Name: </strong>
                             </label>
+                            <check if="{{ @errors['lName'] }}">
+                                <span class="err">{{ @errors['lName'] }}</span>
+                            </check>
                             <input type="text" class="form-control"
                                    placeholder="Enter last name"
-                                   name="last-name" id="last-name">
+                                   name="last-name" id="last-name"
+                                   value="{{ @lastName }}">
                         </div>
                         <div class="form-group">
                             <label for="age">
-                                <strong>Age:</strong>
+                                <strong>Age: </strong>
                             </label>
+                            <check if="{{ @errors['age'] }}">
+                                <span class="err">{{ @errors['age'] }}</span>
+                            </check>
                             <input type="number" class="form-control" id="age"
-                                   placeholder="Enter age" name="age">
+                                   placeholder="Enter age" name="age"
+                                   value="{{ @age }}">
                         </div>
                         <label for="genders">
                             <strong>Gender:</strong>
@@ -71,11 +83,15 @@
                         </div>
                         <div class="form-group">
                             <label for="phone">
-                                <strong>Phone Number:</strong>
+                                <strong>Phone Number: </strong>
                             </label>
-                            <input type="tel" class="form-control"
+                            <check if="{{ @errors['phone'] }}">
+                                <span class="err">{{ @errors['phone'] }}</span>
+                            </check>
+                            <input type="text" class="form-control"
                                    placeholder="Enter phone number"
-                                   id="phone" name="phone">
+                                   id="phone" name="phone"
+                                   value="{{ @phone }}">
                         </div>
                     </div>
                 </div>

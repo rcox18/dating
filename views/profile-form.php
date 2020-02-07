@@ -11,75 +11,38 @@
     <div class="container-fluid p-5">
         <div class="row p-3 border rounded">
             <h1>Profile</h1>
-            <form action="interests-form" method="POST" class="col-12">
+            <form action="#" method="POST" class="col-12">
                 <hr>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="email">
-                                <strong>Email:</strong>
+                                <strong>Email: </strong>
                             </label>
-                            <input type="email" class="form-control"
+                            <check if="{{ @errors['email'] }}">
+                                <span class="err">{{ @errors['email'] }}</span>
+                            </check>
+                            <input type="text" class="form-control"
                                    placeholder="Enter email"
-                                   name="email" id="email">
+                                   name="email" id="email"
+                                   value=" {{ @email }}">
                         </div>
                         <div class="form-group">
                             <label for="state">
                                 <strong>State:</strong>
                             </label>
+                            <check if="{{ @errors['state'] }}">
+                                <span class="err">{{ @errors['state'] }}</span>
+                            </check>
                             <select class="form-control"
                                     id="state" name="state">
-                                <option value="AK">AK</option>
-                                <option value="AL">AL</option>
-                                <option value="AR">AR</option>
-                                <option value="AZ">AZ</option>
-                                <option value="CA">CA</option>
-                                <option value="CO">CO</option>
-                                <option value="CT">CT</option>
-                                <option value="DC">DC</option>
-                                <option value="DE">DE</option>
-                                <option value="FL">FL</option>
-                                <option value="GA">GA</option>
-                                <option value="HI">HI</option>
-                                <option value="IA">IA</option>
-                                <option value="ID">ID</option>
-                                <option value="IL">IL</option>
-                                <option value="IN">IN</option>
-                                <option value="KS">KS</option>
-                                <option value="KY">KY</option>
-                                <option value="LA">LA</option>
-                                <option value="MA">MA</option>
-                                <option value="MD">MD</option>
-                                <option value="ME">ME</option>
-                                <option value="MI">MI</option>
-                                <option value="MN">MN</option>
-                                <option value="MO">MO</option>
-                                <option value="MS">MS</option>
-                                <option value="MT">MT</option>
-                                <option value="NC">NC</option>
-                                <option value="ND">ND</option>
-                                <option value="NE">NE</option>
-                                <option value="NH">NH</option>
-                                <option value="NJ">NJ</option>
-                                <option value="NM">NM</option>
-                                <option value="NV">NV</option>
-                                <option value="NY">NY</option>
-                                <option value="OH">OH</option>
-                                <option value="OK">OK</option>
-                                <option value="OR">OR</option>
-                                <option value="PA">PA</option>
-                                <option value="RI">RI</option>
-                                <option value="SC">SC</option>
-                                <option value="SD">SD</option>
-                                <option value="TN">TN</option>
-                                <option value="TX">TX</option>
-                                <option value="UT">UT</option>
-                                <option value="VA">VA</option>
-                                <option value="VT">VT</option>
-                                <option value="WA">WA</option>
-                                <option value="WI">WI</option>
-                                <option value="WV">WV</option>
-                                <option value="WY">WY</option>
+                                <option value="none">--Select--</option>
+                                <repeat group=" {{ @states }}" value=" {{ @currentState }}">
+                                    <option value="{{ @currentState }}"
+                                    <check if="{{ @currentState == @state }}">
+                                        selected="selected"
+                                    </check>>{{ @currentState }}</option>
+                                </repeat>
                             </select>
                         </div>
                         <label for="seeking-group">
