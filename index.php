@@ -121,7 +121,7 @@ $f3->route("GET|POST /profile-form", function ($f3){
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $isValid = true;
 
-        $f3->set("email",  $_POST["email"]);
+        $f3->set("email", $_POST["email"]);
         if (validEmail( $_POST["email"])) {
             $_SESSION["email"] = $_POST["email"];
         } else {
