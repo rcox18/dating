@@ -1,6 +1,6 @@
 <!--
     Robert Cox
-	1/26/2020
+	2/7/2020
 	url: http://rcox.greenriverdev.com/IT328/dating/{view = /profile-form}
 	The profile information form view for rcox.greenriverdev.com/IT328/dating.
 	A dating website for monsters.
@@ -37,7 +37,8 @@
                             <select class="form-control"
                                     id="state" name="state">
                                 <option value="none">--Select--</option>
-                                <repeat group=" {{ @states }}" value=" {{ @currentState }}">
+                                <repeat group=" {{ @states }}"
+                                        value=" {{ @currentState }}">
                                     <option value="{{ @currentState }}"
                                     <check if="{{ @currentState == @state }}">
                                         selected="selected"
