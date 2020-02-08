@@ -11,103 +11,34 @@
     <div class="container-fluid p-5">
         <div class="row p-3 border rounded">
             <h1>Interests</h1>
-            <form action="profile-summary" class="col-12" method="POST">
+            <form action="#" class="col-12" method="POST">
                 <hr>
                 <div class="form-group">
                     <label for="indoor-interests">
-                        <strong>In-door interests:</strong>
+                        <strong>In-door interests: </strong>
                     </label>
+                    <check if="{{ @errors['indoor'] }}">
+                        <span class="err">{{ @errors['indoor'] }}</span>
+                    </check>
                     <div class="custom-control custom-checkbox"
                          id="indoor-interests">
                         <div class="row">
-                            <div class="col-6 col-xs-4 col-sm-3">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="tv"
-                                       name="indoor-interests[]"
-                                       value="tv">
-                                <label class="custom-control-label"
-                                       for="tv">
-                                    tv
-                                </label>
-                            </div>
-                            <div class="col-6 col-xs-4 col-sm-3">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="movies"
-                                       name="indoor-interests[]"
-                                       value="movies">
-                                <label class="custom-control-label"
-                                       for="movies">
-                                    movies
-                                </label>
-                            </div>
-                            <div class="col-6 col-xs-4 col-sm-3">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="cooking"
-                                       name="indoor-interests[]"
-                                       value="cooking">
-                                <label class="custom-control-label"
-                                       for="cooking">
-                                    cooking
-                                </label>
-                            </div>
-                            <div class="col-6 col-xs-4 col-sm-3">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="board-games"
-                                       name="indoor-interests[]"
-                                       value="board games">
-                                <label class="custom-control-label"
-                                       for="board-games">
-                                    board games
-                                </label>
-                            </div>
-                            <div class="col-6 col-xs-4 col-sm-3">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="puzzles"
-                                       name="indoor-interests[]"
-                                       value="puzzles">
-                                <label class="custom-control-label"
-                                       for="puzzles">
-                                    puzzles
-                                </label>
-                            </div>
-                            <div class="col-6 col-xs-4 col-sm-3">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="reading"
-                                       name="indoor-interests[]"
-                                       value="reading">
-                                <label class="custom-control-label"
-                                       for="reading">
-                                    reading
-                                </label>
-                            </div>
-                            <div class="col-6 col-xs-4 col-sm-3">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="playing-cards"
-                                       name="indoor-interests[]"
-                                       value="playing cards">
-                                <label class="custom-control-label"
-                                       for="playing-cards">
-                                    playing cards
-                                </label>
-                            </div>
-                            <div class="col-6 col-xs-4 col-sm-3">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="video-games"
-                                       name="indoor-interests[]"
-                                       value="video games">
-                                <label class="custom-control-label"
-                                       for="video-games">
-                                    video games
-                                </label>
-                            </div>
+                            <repeat group="{{ @indoor }}" key="{{ @k }}" value="{{ @v }}">
+                                <div class="col-6 col-xs-4 col-sm-3">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="{{ @k }}"
+                                           name="indoor-interests[]"
+                                           value="{{ @k }}"
+                                    <check if="{{ in_array(@k, @indoorInterests) }}">
+                                        checked="checked"
+                                    </check>>
+                                    <label class="custom-control-label"
+                                           for="{{ @k }}">
+                                        {{ @v }}
+                                    </label>
+                                </div>
+                            </repeat>
                         </div>
                     </div>
                 </div>
@@ -115,97 +46,28 @@
                     <label for="outdoor-interests">
                         <strong>Out-door interests:</strong>
                     </label>
+                    <check if="{{ @errors['outdoor'] }}">
+                        <span class="err">{{ @errors['outdoor'] }}</span>
+                    </check>
                         <div class="custom-control custom-checkbox"
-                             id="outoor-interests">
+                             id="outdoor-interests">
                             <div class="row">
-                                <div class="col-6 col-xs-4 col-sm-3">
-                                    <input type="checkbox"
-                                           class="custom-control-input"
-                                           id="hiking"
-                                           name="outdoor-interests[]"
-                                           value="hiking">
-                                    <label class="custom-control-label"
-                                           for="hiking">
-                                        hiking
-                                    </label>
-                                </div>
-                                <div class="col-6 col-xs-4 col-sm-3">
-                                    <input type="checkbox"
-                                           class="custom-control-input"
-                                           id="biking"
-                                           name="outdoor-interests[]"
-                                           value="biking">
-                                    <label class="custom-control-label"
-                                           for="biking">
-                                        biking
-                                    </label>
-                                </div>
-                                <div class="col-6 col-xs-4 col-sm-3">
-                                    <input type="checkbox"
-                                           class="custom-control-input"
-                                           id="swimming"
-                                           name="outdoor-interests[]"
-                                           value="swimming">
-                                    <label class="custom-control-label"
-                                           for="swimming">
-                                        swimming
-                                    </label>
-                                </div>
-                                <div class="col-6 col-xs-4 col-sm-3">
-                                    <input type="checkbox"
-                                           class="custom-control-input"
-                                           id="collecting"
-                                           name="outdoor-interests[]"
-                                           value="collecting">
-                                    <label class="custom-control-label"
-                                           for="collecting">
-                                        collecting
-                                    </label>
-                                </div>
-                                <div class="col-6 col-xs-4 col-sm-3">
-                                    <input type="checkbox"
-                                           class="custom-control-input"
-                                           id="walking"
-                                           name="outdoor-interests[]"
-                                           value="walking">
-                                    <label class="custom-control-label"
-                                           for="walking">
-                                        walking
-                                    </label>
-                                </div>
-                                <div class="col-6 col-xs-4 col-sm-3">
-                                    <input type="checkbox"
-                                           class="custom-control-input"
-                                           id="climbing"
-                                           name="outdoor-interests[]"
-                                           value="climbing">
-                                    <label class="custom-control-label"
-                                           for="climbing">
-                                        climbing
-                                    </label>
-                                </div>
-                                <div class="col-6 col-xs-4 col-sm-3">
-                                    <input type="checkbox"
-                                           class="custom-control-input"
-                                           id="chasing"
-                                           name="outdoor-interests[]"
-                                           value="chasing">
-                                    <label class="custom-control-label"
-                                           for="chasing">
-                                        chasing
-                                    </label>
-                                </div>
-                                <div class="col-6 col-xs-4 col-sm-3">
-                                    <input type="checkbox"
-                                           class="custom-control-input"
-                                           id="stalking"
-                                           name="outdoor-interests[]"
-                                           value="stalking">
-                                    <label class="custom-control-label"
-                                           for="stalking">
-                                        stalking
-                                    </label>
-                                </div>
+                                <repeat group="{{ @outdoor }}" key="{{ @k }}" value="{{ @v }}">
+                                    <div class="col-6 col-xs-4 col-sm-3">
+                                        <input type="checkbox"
+                                               class="custom-control-input"
+                                               id="{{ @k }}"
+                                               name="outdoor-interests[]"
+                                               value="{{ @k }}"
+                                        <check if="{{ in_array(@k, @outdoorInterests) }}">
+                                            checked="checked"
+                                        </check>>
+                                        <label class="custom-control-label"
+                                               for="{{ @k }}">
+                                            {{ @v }}
+                                        </label>
+                                    </div>
+                            </repeat>
                             </div>
                         </div>
                 </div>

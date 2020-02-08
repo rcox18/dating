@@ -59,27 +59,25 @@
                                    value="{{ @age }}">
                         </div>
                         <label for="genders">
-                            <strong>Gender:</strong>
+                            <strong>Gender: </strong>
                         </label>
+                        <check if="{{ @errors['gender'] }}">
+                            <span class="err">{{ @errors['gender'] }}</span>
+                        </check>
                         <div class="form-group form-check pl-0" id="genders">
-                            <label for="gender-m" class="form-check-label ml-4">
+                            <repeat group="{{ @genders }}"
+                                    key="{{ @key }}" value="{{ @value }}">
+                                <label for="gender-{{ @key }}"
+                                       class="form-check-label ml-4">
                                 <input class="form-check-input" type="radio"
-                                       name="gender" id="gender-m"
-                                       value="Female">
-                                Female
-                            </label>
-                            <label for="gender-f" class="form-check-label ml-4">
-                                <input for="gender" class="form-check-input"
-                                       type="radio" name="gender"
-                                       id="gender-f" value="Male">
-                                Male
-                            </label>
-                            <label for="gender-o" class="form-check-label ml-4">
-                                <input class="form-check-input" type="radio"
-                                       name="gender" id="gender-o"
-                                       value="Other">
-                                Other
-                            </label>
+                                       name="gender" id="gender-{{ @key }}"
+                                       value="{{ @key }}"
+                                        <check if="{{ @key == @gender }}">
+                                        checked="checked"
+                                        </check>>
+                                    {{ @value }}
+                                </label>
+                            </repeat>
                         </div>
                         <div class="form-group">
                             <label for="phone">

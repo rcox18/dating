@@ -48,26 +48,23 @@
                         <label for="seeking-group">
                             <strong>Seeking:</strong>
                         </label>
-                        <div class="form-group form-check pl-0"
-                             id="seeking-group">
-                            <label for="seeking" class="form-check-label ml-4">
+                        <check if="{{ @errors['seeking'] }}">
+                            <span class="err">{{ @errors['seeking'] }}</span>
+                        </check>
+                        <div class="form-group form-check pl-0">
+                            <repeat group="{{ @genders }}"
+                                    key="{{ @key }}" value="{{ @value }}">
+                                <label for="seeking-{{ @key }}"
+                                       class="form-check-label ml-4">
                                 <input class="form-check-input" type="radio"
-                                       name="seeking" id="seeking"
-                                       value="Female">
-                                Female
-                            </label>
-                            <label for="seeking" class="form-check-label ml-4">
-                                <input class="form-check-input" type="radio"
-                                       name="seeking" id="seeking"
-                                       value="Male">
-                                Male
-                            </label>
-                            <label for="seeking" class="form-check-label ml-4">
-                                <input class="form-check-input" type="radio"
-                                       name="seeking" id="seeking"
-                                       value="Other">
-                                Other
-                            </label>
+                                       name="seeking" id="seeking-{{ @key }}"
+                                       value="{{ @key }}"
+                                        <check if="{{ @key == @seeking }}">
+                                            checked="checked"
+                                        </check>>
+                                    {{ @value }}
+                                </label>
+                            </repeat>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -76,7 +73,7 @@
                                 <strong>Biography:</strong>
                             </label>
                             <textarea class="form-control rounded" rows="6"
-                                      name="bio" id="bio"></textarea>
+                                      name="bio" id="bio">{{ @bio }}</textarea>
                         </div>
                     </div>
                 </div>

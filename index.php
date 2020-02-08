@@ -22,14 +22,23 @@ $f3 = Base::instance();
 $f3->set('DEBUG', 3);
 
 //set arrays
+$f3->set('genders', array('female'=>'Female', 'male'=>'Male', 'other'=>'Other'));
 $f3->set('states', array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA",
                          "GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD",
                          "ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH",
                          "NJ","NM","NV","NY","OH","OK","OR","PA","PR","PW","RI",
                          "SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV",
                          "WY"));
-$f3->set('indoor', array());
-$f3->set('outdoor', array());
+$f3->set('indoor', array("tv"=>"TV", "movies"=>"Movies", "cooking"=>"Cooking",
+                         "board-games"=>"Board games", "puzzles"=>"Puzzles",
+                         "reading"=>"Reading", "playing-cards"=>"Playing cards",
+                         "video-games"=>"Video games"));
+$f3->set('outdoor', array("hiking"=>"Hiking", "biking"=>"Biking",
+                          "swimming"=>"Swimming", "collecting"=>"Collecting",
+                          "walking"=>"Walking", "climbing"=>"Climbing",
+                          "chasing"=>"Chasing", "stalking"=>"Stalking"));
+$f3->set("indoorInterests",  array());
+$f3->set("outdoorInterests",  array());
 
 //define routes and set the session values
 $f3->route("GET /", function (){
@@ -39,8 +48,7 @@ $f3->route("GET /", function (){
 });
 
 // so I can open the site from the editor
-$f3->route("GET /@item", function (
-    $params){
+$f3->route("GET /@item", function ($params){
     if ($params["item"] == "index.php") {
         $_SESSION["page"] = "Monster Finder";
         $view = new Template();
@@ -79,8 +87,13 @@ $f3->route("GET|POST /personal-form", function ($f3){
         }
 
         $f3->set("gender", $_POST["gender"]);
-        if (isset($_POST["gender"])) {
+        if (isset($_POST["gender"]) AND
+            in_array($_POST["gender"], array_keys($f3->get("genders")))) {
             $_SESSION["gender"] = $_POST["gender"];
+        } else if (isset($_POST["gender"]) AND
+            !in_array($_POST["gender"], array_keys($f3->get("genders")))) {
+            $f3->set("errors['gender']", "Please enter a valid gender.");
+            $isValid = false;
         }
 
         $f3->set("phone", $_POST["phone"]);
@@ -114,7 +127,8 @@ $f3->route("GET|POST /profile-form", function ($f3){
         }
 
         $f3->set("state", $_POST["state"]);
-        if (in_array($_POST["state"], $f3->get("states"))) {
+        if (in_array($_POST["state"], $f3->get("states")) OR
+            $_POST["state"]==="none") {
             $_SESSION["state"] = $_POST["state"];
         } else {
             $f3->set("errors['state']", "Something went wrong, try again.");
@@ -122,9 +136,19 @@ $f3->route("GET|POST /profile-form", function ($f3){
         }
 
         $f3->set("seeking", $_POST["seeking"]);
-        $_SESSION["seeking"] = $_POST["seeking"];
+        if (isset($_POST["seeking"]) AND
+            in_array($_POST["seeking"], array_keys($f3->get("genders")))) {
+            $_SESSION["seeking"] = $_POST["seeking"];
+        } else if (isset($_POST["seeking"]) AND
+            !in_array($_POST["seeking"], array_keys($f3->get("genders")))) {
+            $f3->set("errors['seeking']", "Please enter a valid gender.");
+            $isValid = false;
+        }
+
         $f3->set("bio", $_POST["bio"]);
-        $_SESSION["bio"] = $_POST["bio"];
+        if (isset($_POST["bio"]) ) {
+            $_SESSION["bio"] = $_POST["bio"];
+        }
 
         if ($isValid) {
             $f3->reroute('/interests-form');
@@ -135,29 +159,62 @@ $f3->route("GET|POST /profile-form", function ($f3){
     echo $view->render("views/profile-form.php");
 });
 
-$f3->route("GET|POST /interests-form", function (){
-
+$f3->route("GET|POST /interests-form", function ($f3){
     $_SESSION["page"] = "Interests";
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $isValid = true;
+
+        $f3->set("indoorInterests",  $_POST["indoor-interests"]);
+        $f3->set("outdoorInterests",  $_POST["outdoor-interests"]);
+        $_SESSION["interests"] ="";
+
+        if(isset($_POST["indoor-interests"])) {
+
+            if (!validIndoor($_POST["indoor-interests"])) {
+                $f3->set("errors['indoor']", "Something Phishy Goin' on");
+                $isValid = false;
+            }
+
+
+            if ($isValid AND !empty($_POST["indoor-interests"])) {
+                $_SESSION["indoorInterests"] = $_POST["indoor-interests"];
+                foreach ($_SESSION["indoorInterests"] AS $v) {
+                    $_SESSION["interests"] =
+                        $_SESSION["interests"]." ".$f3->get("indoor[$v]");
+                }
+            }
+        }
+
+        if(isset($_POST["outdoor-interests"])) {
+
+            if (!validOutdoor($_POST["outdoor-interests"])) {
+                $f3->set("errors['outdoor']", "Something Phishy Goin' on");
+                $isValid = false;
+            }
+
+
+            if ($isValid AND !empty($_POST["outdoor-interests"])) {
+                $_SESSION["outdoorInterests"] = $_POST["outdoor-interests"];
+                foreach ($_SESSION["outdoorInterests"] AS $v) {
+                    $_SESSION["interests"] =
+                        $_SESSION["interests"]." ".$f3->get("outdoor[$v]");
+                }
+            }
+        }
+
+        if ($isValid) {
+            $f3->reroute('/profile-summary');
+        }
+    }
+
     $view = new Template();
     echo $view->render("views/interests-form.php");
 });
 
-$f3->route("POST /profile-summary", function () {
+$f3->route("GET|POST /profile-summary", function () {
     $_SESSION["page"] = "Summary";
-    $_SESSION["interests"] ="";
-    if (!empty($_POST["indoor-interests"])) {
-        $_SESSION["indoorInterests"] = $_POST["indoor-interests"];
-        foreach ($_SESSION["indoorInterests"] AS $v) {
-            $_SESSION["interests"] = $_SESSION["interests"] . " $v";
-        }
-    }
 
-    if (!empty($_POST["outdoor-interests"])) {
-        $_SESSION["outdoorInterests"] = $_POST["outdoor-interests"];
-        foreach ($_SESSION["outdoorInterests"] AS $v) {
-            $_SESSION["interests"] = $_SESSION["interests"] . " $v";
-        }
-    }
     $view = new Template();
     echo $view->render("views/profile-summary.php");
 });
