@@ -49,3 +49,8 @@ html {
     html { font-size: 1rem; }
 }
 
+/*for error messages*/
+.err {
+    color: red;
+    font-size: 0.8em;
+}

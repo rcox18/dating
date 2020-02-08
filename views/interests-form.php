@@ -5,7 +5,6 @@
 	The interests information form page for rcox.greenriverdev.com/IT328/dating.
 	A dating website for monsters.
 -->
-
 <include href="php/htmlHead.php"></include>
     <include href="php/site-nav-bar.php"></include>
     <div class="container-fluid p-5">
@@ -23,7 +22,8 @@
                     <div class="custom-control custom-checkbox"
                          id="indoor-interests">
                         <div class="row">
-                            <repeat group="{{ @indoor }}" key="{{ @k }}" value="{{ @v }}">
+                            <repeat group="{{ @indoor }}"
+                                    key="{{ @k }}" value="{{ @v }}">
                                 <div class="col-6 col-xs-4 col-sm-3">
                                     <input type="checkbox"
                                            class="custom-control-input"
@@ -49,27 +49,28 @@
                     <check if="{{ @errors['outdoor'] }}">
                         <span class="err">{{ @errors['outdoor'] }}</span>
                     </check>
-                        <div class="custom-control custom-checkbox"
-                             id="outdoor-interests">
-                            <div class="row">
-                                <repeat group="{{ @outdoor }}" key="{{ @k }}" value="{{ @v }}">
-                                    <div class="col-6 col-xs-4 col-sm-3">
-                                        <input type="checkbox"
-                                               class="custom-control-input"
-                                               id="{{ @k }}"
-                                               name="outdoor-interests[]"
-                                               value="{{ @k }}"
-                                        <check if="{{ in_array(@k, @outdoorInterests) }}">
-                                            checked="checked"
-                                        </check>>
-                                        <label class="custom-control-label"
-                                               for="{{ @k }}">
-                                            {{ @v }}
-                                        </label>
-                                    </div>
-                            </repeat>
-                            </div>
+                    <div class="custom-control custom-checkbox"
+                         id="outdoor-interests">
+                        <div class="row">
+                            <repeat group="{{ @outdoor }}"
+                                    key="{{ @k }}" value="{{ @v }}">
+                                <div class="col-6 col-xs-4 col-sm-3">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="{{ @k }}"
+                                           name="outdoor-interests[]"
+                                           value="{{ @k }}"
+                                    <check if="{{ in_array(@k, @outdoorInterests) }}">
+                                        checked="checked"
+                                    </check>>
+                                    <label class="custom-control-label"
+                                           for="{{ @k }}">
+                                        {{ @v }}
+                                    </label>
+                                </div>
+                        </repeat>
                         </div>
+                    </div>
                 </div>
                 <div class="row">
 

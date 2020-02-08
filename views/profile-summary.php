@@ -5,7 +5,6 @@
 	The profile summary page view for rcox.greenriverdev.com/IT328/dating.
 	A dating website for monsters.
 -->
-
 <include href="php/htmlHead.php"></include>
     <include href="php/site-nav-bar.php"></include>
     <div class="container-fluid p-5">
@@ -26,7 +25,7 @@
                             Name: {{ @SESSION.firstName }}
                             {{ @SESSION.lastName }}</li>
                         <li class="list-group-item">
-                            Gender: {{ @SESSION.gender }}</li>
+                            Gender: {{ ucfirst(@SESSION.gender) }}</li>
                         <li class="list-group-item">
                             Age: {{ @SESSION.age }}</li>
                         <li class="list-group-item">
@@ -36,7 +35,7 @@
                         <li class="list-group-item">
                             State: {{ @SESSION.state }}</li>
                         <li class="list-group-item">
-                            Seeking: {{ @SESSION.seeking }}</li>
+                            Seeking: {{ ucfirst(@SESSION.seeking) }}</li>
                         <li class="list-group-item">
                             Interests: {{ @SESSION.interests }}</li>
                     </ul>

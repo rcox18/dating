@@ -4,9 +4,9 @@ session_start();
  *  An index controller page for rcox.greenriverdev.com/IT328/dating.
  *
  * @author     Robert Cox
- * @version    1.0.0
+ * @version    2.0.0
  * @link       http://rcox.greenriverdev.com/IT328/dating
- * @since      1/19/2020
+ * @since      2/7 /2020
  */
 
 // error reporting turned on
@@ -21,7 +21,7 @@ require ("model/validation-functions.php");
 $f3 = Base::instance();
 $f3->set('DEBUG', 3);
 
-//set arrays
+//set arrays for sticky and validation
 $f3->set('genders', array('female'=>'Female', 'male'=>'Male', 'other'=>'Other'));
 $f3->set('states', array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA",
                          "GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD",
@@ -56,6 +56,7 @@ $f3->route("GET /@item", function ($params){
     }
 });
 
+//personal form and validation
 $f3->route("GET|POST /personal-form", function ($f3){
     $_SESSION["page"] = "Personal";
 
@@ -66,7 +67,7 @@ $f3->route("GET|POST /personal-form", function ($f3){
         if (validName($_POST["first-name"])) {
             $_SESSION["firstName"] = $_POST["first-name"];
         } else {
-            $f3->set("errors['fName']", "Please enter a valid name.");
+            $f3->set("errors['fName']", "Please enter a name.");
             $isValid = false;
         }
 
@@ -74,7 +75,7 @@ $f3->route("GET|POST /personal-form", function ($f3){
         if (validName($_POST["last-name"])) {
             $_SESSION["lastName"] = $_POST["last-name"];
         } else {
-            $f3->set("errors['lName']", "Please enter a valid name.");
+            $f3->set("errors['lName']", "Please enter a name.");
             $isValid = false;
         }
 
@@ -100,15 +101,17 @@ $f3->route("GET|POST /personal-form", function ($f3){
         if (validPhone($_POST["phone"])) {
             $_SESSION["phone"] = $_POST["phone"];
         } else {
-            $f3->set("errors['phone']", "Please enter a valid phone number.");
+            $f3->set("errors['phone']", "Please enter a phone number.");
             $isValid = false;
         }
 
+        //all inputs valid, go to next page
         if ($isValid) {
             $f3->reroute('/profile-form');
         }
     }
 
+    //not rerouted so stay on page
     $view = new Template();
     echo $view->render("views/personal-form.php");
 });
@@ -122,7 +125,7 @@ $f3->route("GET|POST /profile-form", function ($f3){
         if (validEmail( $_POST["email"])) {
             $_SESSION["email"] = $_POST["email"];
         } else {
-            $f3->set("errors['email']", "Please enter a valid email.");
+            $f3->set("errors['email']", "Please enter an email.");
             $isValid = false;
         }
 
@@ -131,7 +134,7 @@ $f3->route("GET|POST /profile-form", function ($f3){
             $_POST["state"]==="none") {
             $_SESSION["state"] = $_POST["state"];
         } else {
-            $f3->set("errors['state']", "Something went wrong, try again.");
+            $f3->set("errors['state']", "Are you sure?");
             $isValid = false;
         }
 
@@ -141,7 +144,7 @@ $f3->route("GET|POST /profile-form", function ($f3){
             $_SESSION["seeking"] = $_POST["seeking"];
         } else if (isset($_POST["seeking"]) AND
             !in_array($_POST["seeking"], array_keys($f3->get("genders")))) {
-            $f3->set("errors['seeking']", "Please enter a valid gender.");
+            $f3->set("errors['seeking']", "Is that a gender?");
             $isValid = false;
         }
 
@@ -172,7 +175,7 @@ $f3->route("GET|POST /interests-form", function ($f3){
         if(isset($_POST["indoor-interests"])) {
 
             if (!validIndoor($_POST["indoor-interests"])) {
-                $f3->set("errors['indoor']", "Something Phishy Goin' on");
+                $f3->set("errors['indoor']", "Hmmm...Phishy!");
                 $isValid = false;
             }
 
@@ -189,7 +192,7 @@ $f3->route("GET|POST /interests-form", function ($f3){
         if(isset($_POST["outdoor-interests"])) {
 
             if (!validOutdoor($_POST["outdoor-interests"])) {
-                $f3->set("errors['outdoor']", "Something Phishy Goin' on");
+                $f3->set("errors['outdoor']", "Hmmm...Phishy!");
                 $isValid = false;
             }
 
