@@ -25,7 +25,7 @@
                             <input type="text" class="form-control"
                                    placeholder="Enter email"
                                    name="email" id="email"
-                                   value=" {{ @email }}">
+                                   value="{{ @email }}">
                         </div>
                         <div class="form-group">
                             <label for="state">

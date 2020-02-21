@@ -1,5 +1,5 @@
 {
-  "name": "rcox.greenriverdev.com/IT328/chicken",
+  "name": "rcox.greenriverdev.com/IT328/dating",
   "authors":
   [
     {
@@ -10,5 +10,8 @@
   "require":
   {
     "bcosca/fatfree-core": "dev-master"
+  },
+  "autoload": {
+    "classmap": ["classes/", "controller/", "model/"]
   }
 }
