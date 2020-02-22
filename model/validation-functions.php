@@ -7,19 +7,37 @@
  * @author     Robert Cox
  * @version    1.0.0
  */
+
+/**
+ * Class Validator
+ */
 class Validator {
-    //returns true if a string is all alphabetic
+
+    /**
+     * returns true if a string is all alphabetic
+     * @param $string
+     * @return bool
+     */
     function validName($string) {
         return ctype_alpha($string);
     }
 
     //returns true if numeric and between 18 and 118
+
+    /**
+     * @param $num
+     * @return bool
+     */
     function validAge($num) {
         return is_numeric($num) AND $num>17 AND $num<119;
     }
 
     //checks to see that a phone number is valid (you can decide what
     // constitutes a “valid” phone number)
+    /**
+     * @param $phoneNum
+     * @return bool
+     */
     function validPhone($phoneNum){
         $digitsOnly = "/^[0-9]{10}+$/";
         $withDashes = "/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/";
@@ -30,12 +48,23 @@ class Validator {
     }
 
     //checks to see that an email address is valid
+
+    /**
+     * @param $email
+     * @return mixed
+     */
     function validEmail($email){
 
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     //checks each selected outdoor interest against a list of valid options
+
+    /**
+     * @param $array
+     * @param $f3
+     * @return bool
+     */
     function validOutdoor($array, $f3){
 
         foreach ($array AS $v) {
@@ -47,6 +76,12 @@ class Validator {
     }
 
     //checks each selected indoor interest against a list of valid options
+
+    /**
+     * @param $array
+     * @param $f3
+     * @return bool
+     */
     function validIndoor($array, $f3){
 
         foreach ( $array AS $v) {

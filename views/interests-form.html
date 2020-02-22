@@ -30,7 +30,8 @@
                                            id="{{ @k }}"
                                            name="indoor-interests[]"
                                            value="{{ @v }}"
-                                    <check if="{{ is_array(@indoorInterests) AND in_array(@v, @indoorInterests) }}">
+                                    <check if="{{ is_array(@indoorInterests) AND
+                                        in_array(@v, @indoorInterests) }}">
                                         checked="checked"
                                     </check>>
                                     <label class="custom-control-label"
@@ -60,7 +61,8 @@
                                            id="{{ @k }}"
                                            name="outdoor-interests[]"
                                            value="{{ @v }}"
-                                    <check if="{{ is_array(@outdoorInterests) AND in_array(@v, @outdoorInterests) }}">
+                                    <check if="{{ is_array(@outdoorInterests) AND
+                                        in_array(@v, @outdoorInterests) }}">
                                         checked="checked"
                                     </check>>
                                     <label class="custom-control-label"

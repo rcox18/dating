@@ -12,12 +12,16 @@
             <div class="col-sm-6 order-sm-2">
                 <div class="row profile-img-div">
                     <check if="{{ @SESSION.profileImage }}">
-                        <true><img src="{{ @SESSION.profileImage }}"
+                        <true>
+                            <img src="{{ @SESSION.profileImage }}"
                              class="rounded profile-img"
-                             alt="Profile image" id="profile-pic"></true>
-                        <false><img src="images/smiley-monster.jpg"
+                             alt="Profile image">
+                        </true>
+                        <false>
+                            <img src="images/smiley-monster.jpg"
                                     class="rounded profile-img"
-                                    alt="Profile image" id="profile-pic"></false>
+                                    alt="Profile image">
+                        </false>
                     </check>
                 </div>
                 <hr>
@@ -31,7 +35,8 @@
                             Name: {{ @SESSION['user']->getFname() }}
                             {{ @SESSION['user']->getLname() }}</li>
                         <li class="list-group-item">
-                            Gender: {{ ucfirst(@SESSION['user']->getGender()) }}</li>
+                            Gender: {{ ucfirst(@SESSION['user']->getGender()) }}
+                        </li>
                         <li class="list-group-item">
                             Age: {{ @SESSION['user']->getAge() }}</li>
                         <li class="list-group-item">

@@ -47,6 +47,7 @@ class DatingController {
      */
     public function home() {
         $_SESSION["page"] = "Monster Finder";
+        unset($_SESSION["profileImage"]);
         $view = new Template();
         echo $view->render("views/home.html");
     }
@@ -56,7 +57,7 @@ class DatingController {
      */
     public function personalForm() {
         $_SESSION["page"] = "Personal";
-
+        unset($_SESSION["profileImage"]);
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
 
@@ -140,6 +141,8 @@ class DatingController {
      */
     public function profileForm() {
         $_SESSION["page"] = "Profile";
+        unset($_SESSION["profileImage"]);
+
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
 
@@ -198,7 +201,6 @@ class DatingController {
 
         $view = new Template();
         echo $view->render("views/profile-form.html");
-
     }
 
     /**
@@ -306,7 +308,6 @@ class DatingController {
                     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"],
                         $target_file)) {
 
-
                         $_SESSION["profileImage"] = $target_file;
                         $this->_f3->set("profileImage", $target_file);
                         $this->_f3->reroute('/profile-summary');
@@ -333,7 +334,6 @@ class DatingController {
 
         $view = new Template();
         echo $view->render("views/profile-summary.html");
-
     }
 
 

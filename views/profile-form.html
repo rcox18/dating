@@ -52,7 +52,8 @@
                         <check if="{{ @errors['seeking'] }}">
                             <span class="err">{{ @errors['seeking'] }}</span>
                         </check>
-                        <div class="form-group form-check pl-0">
+                        <div class="form-group form-check pl-0"
+                             id="seeking-group">
                             <repeat group="{{ @genders }}"
                                     key="{{ @key }}" value="{{ @value }}">
                                 <label for="seeking-{{ @key }}"

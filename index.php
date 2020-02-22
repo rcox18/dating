@@ -18,33 +18,37 @@ session_start();
 
 $datingController = new DatingController();
 
-//define routes and set the session values
+//define routes for the site
 $datingController->getF3()->route("GET /", function (){
     global $datingController;
     $datingController->home();
 });
 
-//personal form and validation
+//personal form
 $datingController->getF3()->route("GET|POST /personal-form", function () {
     global $datingController;
     $datingController->personalForm();
 });
 
+//profile form
 $datingController->getF3()->route("GET|POST /profile-form", function () {
     global $datingController;
     $datingController->profileForm();
 });
 
+//interests form
 $datingController->getF3()->route("GET|POST /interests-form", function () {
     global $datingController;
     $datingController->interestsForm();
 });
 
+//profile image upload form
 $datingController->getF3()->route("GET|POST /profile-image", function () {
     global $datingController;
     $datingController->profileImage();
 });
 
+//profile page
 $datingController->getF3()->route("GET|POST /profile-summary", function () {
     global $datingController;
     $datingController->profileSummary();
