@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  *  Validation functions for Monster Dating Site sign up form .
  *
  * @link       http://rcox.greenriverdev.com/IT328/dating
@@ -22,9 +22,8 @@ class Validator {
         return ctype_alpha($string);
     }
 
-    //returns true if numeric and between 18 and 118
-
     /**
+     * returns true if numeric and between 18 and 118
      * @param $num
      * @return bool
      */
@@ -32,9 +31,10 @@ class Validator {
         return is_numeric($num) AND $num>17 AND $num<119;
     }
 
-    //checks to see that a phone number is valid (you can decide what
-    // constitutes a “valid” phone number)
+
     /**
+     * checks to see that a phone number is valid (you can decide what
+     * constitutes a “valid” phone number)
      * @param $phoneNum
      * @return bool
      */
@@ -47,9 +47,8 @@ class Validator {
             preg_match($internationalFormat, $phoneNum);
     }
 
-    //checks to see that an email address is valid
-
     /**
+     * checks to see that an email address is valid
      * @param $email
      * @return mixed
      */
@@ -58,9 +57,8 @@ class Validator {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
-    //checks each selected outdoor interest against a list of valid options
-
     /**
+     * checks each selected outdoor interest against a list of valid options
      * @param $array
      * @param $f3
      * @return bool
@@ -75,9 +73,8 @@ class Validator {
         return true;
     }
 
-    //checks each selected indoor interest against a list of valid options
-
     /**
+     * checks each selected indoor interest against a list of valid options
      * @param $array
      * @param $f3
      * @return bool

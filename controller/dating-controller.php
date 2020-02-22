@@ -1,9 +1,29 @@
 <?php
+/**
+ *  Controller object for Monster Date.
+ *
+ * @link       http://rcox.greenriverdev.com/IT328/dating
+ * @since      2/22/2020
+ * @author     Robert Cox
+ * @version    1.0.0
+ */
 
 /**
  * Class DatingController
  */
 class DatingController {
+    /**
+     * @return Validator
+     */
+
+
+    /**
+     * @param Validator $validator
+     */
+    public function setValidator($validator)
+    {
+        $this->_validator = $validator;
+    }
 
     private $_f3;
     private $_validator;
@@ -43,7 +63,7 @@ class DatingController {
     }
 
     /**
-     *
+     * renders the home view
      */
     public function home() {
         $_SESSION["page"] = "Monster Finder";
@@ -53,7 +73,7 @@ class DatingController {
     }
 
     /**
-     *
+     * renders the personal form and uses validator to determine rerouting
      */
     public function personalForm() {
         $_SESSION["page"] = "Personal";
@@ -137,7 +157,7 @@ class DatingController {
     }
 
     /**
-     *
+     * renders the profile form and uses validator to determine rerouting
      */
     public function profileForm() {
         $_SESSION["page"] = "Profile";
@@ -204,7 +224,7 @@ class DatingController {
     }
 
     /**
-     *
+     * renders the interests form and uses validator to determine rerouting
      */
     public function interestsForm() {
         $_SESSION["page"] = "Interests";
@@ -270,7 +290,7 @@ class DatingController {
     }
 
     /**
-     *
+     * renders the image upload form and uses validator to determine rerouting
      */
     public function profileImage() {
 
@@ -327,7 +347,7 @@ class DatingController {
     }
 
     /**
-     *
+     * renders the profile summary view
      */
     public function profileSummary() {
         $_SESSION["page"] = "Summary";
@@ -336,6 +356,14 @@ class DatingController {
         echo $view->render("views/profile-summary.html");
     }
 
+
+    /**
+     * @return Validator
+     */
+    public function getValidator()
+    {
+        return $this->_validator;
+    }
 
     /**
     * @return Base

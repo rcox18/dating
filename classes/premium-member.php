@@ -1,10 +1,23 @@
 <?php
+/**
+ *  Premium member object for Monster Date.
+ *
+ * @link       http://rcox.greenriverdev.com/IT328/dating
+ * @since      2/22/2020
+ * @author     Robert Cox
+ * @version    1.0.0
+ */
+
+
+/**
+ * Class PremiumMember extends Member
+ */
 class PremiumMember extends Member {
     private $_indoorInterests;
     private $_outdoorInterests;
 
     /**
-     * PremiumMember constructor.
+     * PremiumMember constructor calls the parent constructor.
      */
     public function __construct($fname, $lname, $age, $gender, $phone)
     {
@@ -12,6 +25,7 @@ class PremiumMember extends Member {
     }
 
     /**
+     * getter
      * @return mixed
      */
     public function getIndoorInterests()
@@ -20,6 +34,7 @@ class PremiumMember extends Member {
     }
 
     /**
+     * setter
      * @param mixed $indoorInterests
      */
     public function setIndoorInterests($indoorInterests)
@@ -28,6 +43,7 @@ class PremiumMember extends Member {
     }
 
     /**
+     * getter
      * @return mixed
      */
     public function getOutdoorInterests()
@@ -36,6 +52,7 @@ class PremiumMember extends Member {
     }
 
     /**
+     * setter
      * @param mixed $outdoorInterests
      */
     public function setOutdoorInterests($outdoorInterests)

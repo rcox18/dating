@@ -1,4 +1,17 @@
 <?php
+/**
+ *  Basic member object for Monster Date.
+ *
+ * @link       http://rcox.greenriverdev.com/IT328/dating
+ * @since      2/22/2020
+ * @author     Robert Cox
+ * @version    1.0.0
+ */
+
+
+/**
+ * Class Member
+ */
 class Member{
     private $_fname;
     private $_lname;
@@ -11,7 +24,7 @@ class Member{
     private $_bio;
 
     /**
-     * Member constructor.
+     * Member constructor. Parameters come from the SESSION
      * @param $fname
      * @param $lname
      * @param $age
