@@ -15,6 +15,20 @@
     background-position: center;
 }
 
+
+.profile-img-div {
+    max-height: 60%;
+    overflow: hidden;
+}
+
+.profile-img {
+    width: auto;
+    height: 100%;
+    max-height: 100%;
+}
+
+
+
 @media (max-width: 576px) {
     .bkgd-img {
         height: 175px;

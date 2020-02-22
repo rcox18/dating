@@ -1,16 +1,37 @@
 <?php
 class DatingController {
+
     private $_f3;
     private $_validator;
 
     /**
      * DatingController constructor.
-     * @param $_f3
      */
-    public function __construct($_f3)
+    public function __construct()
     {
-        $this->_f3 = $_f3;
+        $this->_f3 = Base::instance();;
         $this->_validator = new Validator();
+
+        $this->_f3->set('DEBUG', 3);
+
+        //set arrays for sticky and validation
+        $this->_f3->set('genders', array('female'=>'Female', 'male'=>'Male', 'other'=>'Other'));
+        $this->_f3->set('states', array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA",
+            "GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD",
+            "ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH",
+            "NJ","NM","NV","NY","OH","OK","OR","PA","PR","PW","RI",
+            "SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV",
+            "WY"));
+        $this->_f3->set('indoor', array("tv"=>"TV", "movies"=>"Movies", "cooking"=>"Cooking",
+            "board-games"=>"Board games", "puzzles"=>"Puzzles",
+            "reading"=>"Reading", "playing-cards"=>"Playing cards",
+            "video-games"=>"Video games"));
+        $this->_f3->set('outdoor', array("hiking"=>"Hiking", "biking"=>"Biking",
+            "swimming"=>"Swimming", "collecting"=>"Collecting",
+            "walking"=>"Walking", "climbing"=>"Climbing",
+            "chasing"=>"Chasing", "stalking"=>"Stalking"));
+        $this->_f3->set("indoorInterests",  array());
+        $this->_f3->set("outdoorInterests",  array());
     }
 
     public function home() {
@@ -67,8 +88,23 @@ class DatingController {
                 $isValid = false;
             }
 
+            //check premium membership
+            $this->_f3->set("premium", ((isset($_POST["premium"])? "checked": "")));
+            $_SESSION["premium"] = (isset($_POST["premium"])? "1" : "0");
+
             //all inputs valid, go to next page
             if ($isValid) {
+                if ($_SESSION["premium"] == "0") {
+                    $user = new Member($_SESSION["firstName"],
+                        $_SESSION["lastName"], $_SESSION["age"],
+                        $_SESSION["gender"], $_SESSION["phone"]);
+                } else {
+                    $user = new PremiumMember($_SESSION["firstName"],
+                        $_SESSION["lastName"], $_SESSION["age"],
+                        $_SESSION["gender"], $_SESSION["phone"]);
+                }
+                $this->_f3->set("user", $user);
+                $_SESSION["user"] = $user;
                 $this->_f3->reroute('/profile-form');
             }
         }
@@ -116,7 +152,17 @@ class DatingController {
             }
 
             if ($isValid) {
-                $this->_f3->reroute('/interests-form');
+                $_SESSION["user"]->setEmail($_SESSION["email"]);
+                $_SESSION["user"]->setState($_SESSION["state"]);
+                $_SESSION["user"]->setSeeking($_SESSION["seeking"]);
+                $_SESSION["user"]->setBio($_SESSION["bio"]);
+
+                if (is_a($_SESSION["user"], "PremiumMember")) {
+                    $this->_f3->reroute('/interests-form');
+                } else {
+                    $this->_f3->reroute('/profile-summary');
+                }
+
             }
         }
 
@@ -137,7 +183,7 @@ class DatingController {
 
             if(isset($_POST["indoor-interests"])) {
 
-                if (!$this->_validator->validIndoor($_POST["indoor-interests"])) {
+                if (!$this->_validator->validIndoor($_POST["indoor-interests"], $this->_f3)) {
                     $this->_f3->set("errors['indoor']", "Hmmm...Phishy!");
                     $isValid = false;
                 }
@@ -154,7 +200,7 @@ class DatingController {
 
             if(isset($_POST["outdoor-interests"])) {
 
-                if (!$this->_validator->validOutdoor($_POST["outdoor-interests"])) {
+                if (!$this->_validator->validOutdoor($_POST["outdoor-interests"], $this->_f3)) {
                     $this->_f3->set("errors['outdoor']", "Hmmm...Phishy!");
                     $isValid = false;
                 }
@@ -170,7 +216,9 @@ class DatingController {
             }
 
             if ($isValid) {
-                $this->_f3->reroute('/profile-summary');
+                $_SESSION["user"]->setIndoorInterests($_POST["indoor-interests"]);
+                $_SESSION["user"]->setOutdoorInterests($_POST["outdoor-interests"]);
+                $this->_f3->reroute('/profile-image');
             }
         }
 
@@ -179,11 +227,62 @@ class DatingController {
 
     }
 
+    public function profileImage() {
+
+        $_SESSION["page"] = "Profile Image";
+
+        $target_dir = "uploads/";
+        $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        // Check if image file is a actual image or fake image
+        if (isset($_POST["submit"]) AND !empty($_FILES["fileToUpload"]["tmp_name"])) {
+
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            $uploadOk = true;
+
+            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+                $this->_f3->set("errors['fileFormat']", "Sorry, only JPG, JPEG, PNG files are allowed.");
+                $uploadOk = false;
+            } elseif ($check === false) {
+                //echo "File is an image - " . $check["mime"] . ".";
+                $this->_f3->set("errors['fileExists']", "Not recognized as an image.");
+                $uploadOk = false;
+                // Allow certain file formats
+            }
+
+            if ($uploadOk) {
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    $_SESSION["profileImage"] = $target_file;
+                    $this->_f3->set("profileImage", $target_file);
+                    $this->_f3->reroute('/profile-summary');
+                } else {
+                    $this->_f3->set("errors['fileUpload']", "Sorry, there was an error uploading your file.");
+                }
+            }
+        } else {
+            $this->_f3->set("errors['fileExists']", "No file.");
+        }
+
+        $view = new Template();
+        echo $view->render("views/profile-image.html");
+    }
+
     public function profileSummary() {
         $_SESSION["page"] = "Summary";
 
         $view = new Template();
         echo $view->render("views/profile-summary.php");
 
+    }
+
+
+    /**
+    * @return Base
+    */
+    public function getF3()
+    {
+        return $this->_f3;
     }
 }

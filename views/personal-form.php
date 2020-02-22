@@ -91,6 +91,13 @@
                                    id="phone" name="phone"
                                    value="{{ @phone }}">
                         </div>
+                        <label for="premium">
+                            <strong>Premium Membership: </strong>
+                        </label>
+                        <div class="form-check" id="premium-check">
+                            <input type="checkbox" class="form-check-input" id="premium" name="premium" {{ @premium }}>
+                            <label class="form-check-label" for="premium">Sign me up for a premium Account!</label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

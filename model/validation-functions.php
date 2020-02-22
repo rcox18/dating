@@ -36,10 +36,10 @@ class Validator {
     }
 
     //checks each selected outdoor interest against a list of valid options
-    function validOutdoor($array){
-        global $f3;
+    function validOutdoor($array, $f3){
+
         foreach ($array AS $v) {
-            if (!in_array($v, array_keys($f3->get("outdoor")))) {
+            if (!in_array($v, array_values($f3->get("outdoor")))) {
                 return false;
             }
         }
@@ -47,10 +47,10 @@ class Validator {
     }
 
     //checks each selected indoor interest against a list of valid options
-    function validIndoor($array){
-        global $f3;
+    function validIndoor($array, $f3){
+
         foreach ( $array AS $v) {
-            if (!in_array($v, array_keys($f3->get("indoor")))) {
+            if (!in_array($v, array_values($f3->get("indoor")))) {
                 return false;
             }
         }

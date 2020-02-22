@@ -10,34 +10,51 @@
     <div class="container-fluid p-5">
         <div class="row p-3 border rounded">
             <div class="col-sm-6 order-sm-2">
-                <div class="row">
-                    <img src="images/smiley-monster.jpg" class="rounded"
-                         alt="smiling monster" id="profile-pic">
+                <div class="row profile-img-div">
+                    <check if="{{ @profileImage }}">
+                        <true><img src="{{ @SESSION.profileImage }}"
+                             class="rounded profile-img"
+                             alt="Profile image" id="profile-pic"></true>
+                        <false><img src="images/smiley-monster.jpg"
+                                    class="rounded profile-img"
+                                    alt="Profile image" id="profile-pic"></false>
+                    </check>
+
                 </div>
                 <hr>
                 <h3>Biography</h3>
-                <p class="text-center">{{ @SESSION.bio }}</p>
+                <p class="text-center">{{ @SESSION['user']->getBio() }}</p>
             </div>
             <div class="col-sm-6 order-sm-1">
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            Name: {{ @SESSION.firstName }}
-                            {{ @SESSION.lastName }}</li>
+                            Name: {{ @SESSION['user']->getFname() }}
+                            {{ @SESSION['user']->getLname() }}</li>
                         <li class="list-group-item">
-                            Gender: {{ ucfirst(@SESSION.gender) }}</li>
+                            Gender: {{ ucfirst(@SESSION['user']->getGender()) }}</li>
                         <li class="list-group-item">
-                            Age: {{ @SESSION.age }}</li>
+                            Age: {{ @SESSION['user']->getAge() }}</li>
                         <li class="list-group-item">
-                            Phone: {{ @SESSION.phone }}</li>
+                            Phone: {{ @SESSION['user']->getPhone() }}</li>
                         <li class="list-group-item">
-                            Email: {{ @SESSION.email }}</li>
+                            Email: {{ @SESSION['user']->getEmail() }}</li>
                         <li class="list-group-item">
-                            State: {{ @SESSION.state }}</li>
+                            State: {{ @SESSION['user']->getState() }}</li>
                         <li class="list-group-item">
-                            Seeking: {{ ucfirst(@SESSION.seeking) }}</li>
-                        <li class="list-group-item">
-                            Interests: {{ @SESSION.interests }}</li>
+                            Seeking: {{ ucfirst(@SESSION['user']->getSeeking()) }}</li>
+                        <check if="{{ is_a(@SESSION.user, 'PremiumMember') }}">
+                            <li class="list-group-item">
+                            Interests: <repeat group="{{ @SESSION['user']->getIndoorInterests() }}" key="{{ @key }}" value="{{ @val }}">
+                                        {{ @val }}
+                                       </repeat>
+                                       <repeat group="{{ @SESSION['user']->getOutdoorInterests() }}" key="{{ @key }}" value="{{ @val }}">
+                                        {{ @val }}
+                                       </repeat>
+                            </li>
+                        </check>
+
+
                     </ul>
                 </div>
             </div>
