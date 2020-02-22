@@ -132,7 +132,7 @@ class DatingController {
 
         //not rerouted so stay on page
         $view = new Template();
-        echo $view->render("views/personal-form.php");
+        echo $view->render("views/personal-form.html");
     }
 
     /**
@@ -197,7 +197,7 @@ class DatingController {
         }
 
         $view = new Template();
-        echo $view->render("views/profile-form.php");
+        echo $view->render("views/profile-form.html");
 
     }
 
@@ -263,7 +263,7 @@ class DatingController {
         }
 
         $view = new Template();
-        echo $view->render("views/interests-form.php");
+        echo $view->render("views/interests-form.html");
 
     }
 
@@ -332,7 +332,7 @@ class DatingController {
         $_SESSION["page"] = "Summary";
 
         $view = new Template();
-        echo $view->render("views/profile-summary.php");
+        echo $view->render("views/profile-summary.html");
 
     }
 
