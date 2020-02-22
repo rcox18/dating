@@ -11,7 +11,7 @@
         <div class="row p-3 border rounded">
             <div class="col-sm-6 order-sm-2">
                 <div class="row profile-img-div">
-                    <check if="{{ @profileImage }}">
+                    <check if="{{ @SESSION.profileImage }}">
                         <true><img src="{{ @SESSION.profileImage }}"
                              class="rounded profile-img"
                              alt="Profile image" id="profile-pic"></true>
@@ -19,7 +19,6 @@
                                     class="rounded profile-img"
                                     alt="Profile image" id="profile-pic"></false>
                     </check>
-
                 </div>
                 <hr>
                 <h3>Biography</h3>
@@ -45,12 +44,15 @@
                             Seeking: {{ ucfirst(@SESSION['user']->getSeeking()) }}</li>
                         <check if="{{ is_a(@SESSION.user, 'PremiumMember') }}">
                             <li class="list-group-item">
-                            Interests: <repeat group="{{ @SESSION['user']->getIndoorInterests() }}" key="{{ @key }}" value="{{ @val }}">
-                                        {{ @val }}
-                                       </repeat>
-                                       <repeat group="{{ @SESSION['user']->getOutdoorInterests() }}" key="{{ @key }}" value="{{ @val }}">
-                                        {{ @val }}
-                                       </repeat>
+                            Interests:
+                                <repeat group="{{ @SESSION['user']->getIndoorInterests() }}"
+                                        key="{{ @key }}" value="{{ @val }}">
+                                    {{ @val }}
+                                </repeat>
+                                <repeat group="{{ @SESSION['user']->getOutdoorInterests() }}"
+                                        key="{{ @key }}" value="{{ @val }}">
+                                    {{ @val }}
+                                </repeat>
                             </li>
                         </check>
 

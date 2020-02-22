@@ -15,18 +15,22 @@ class DatingController {
         $this->_f3->set('DEBUG', 3);
 
         //set arrays for sticky and validation
-        $this->_f3->set('genders', array('female'=>'Female', 'male'=>'Male', 'other'=>'Other'));
-        $this->_f3->set('states', array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA",
+        $this->_f3->set('genders',
+            array('female'=>'Female', 'male'=>'Male', 'other'=>'Other'));
+        $this->_f3->set('states',
+            array("AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA",
             "GU","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD",
             "ME","MH","MI","MN","MO","MS","MT","NC","ND","NE","NH",
             "NJ","NM","NV","NY","OH","OK","OR","PA","PR","PW","RI",
             "SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV",
             "WY"));
-        $this->_f3->set('indoor', array("tv"=>"TV", "movies"=>"Movies", "cooking"=>"Cooking",
+        $this->_f3->set('indoor',
+            array("tv"=>"TV", "movies"=>"Movies", "cooking"=>"Cooking",
             "board-games"=>"Board games", "puzzles"=>"Puzzles",
             "reading"=>"Reading", "playing-cards"=>"Playing cards",
             "video-games"=>"Video games"));
-        $this->_f3->set('outdoor', array("hiking"=>"Hiking", "biking"=>"Biking",
+        $this->_f3->set('outdoor',
+            array("hiking"=>"Hiking", "biking"=>"Biking",
             "swimming"=>"Swimming", "collecting"=>"Collecting",
             "walking"=>"Walking", "climbing"=>"Climbing",
             "chasing"=>"Chasing", "stalking"=>"Stalking"));
@@ -36,6 +40,7 @@ class DatingController {
 
     public function home() {
         $_SESSION["page"] = "Monster Finder";
+        unset($_SESSION["profileImage"]);
         $view = new Template();
         echo $view->render("views/home.html");
     }
@@ -72,11 +77,16 @@ class DatingController {
 
             $this->_f3->set("gender", $_POST["gender"]);
             if (isset($_POST["gender"]) AND
-                in_array($_POST["gender"], array_keys($this->_f3->get("genders")))) {
+                in_array($_POST["gender"],
+                    array_keys($this->_f3->get("genders")))) {
+
                 $_SESSION["gender"] = $_POST["gender"];
             } else if (isset($_POST["gender"]) AND
-                !in_array($_POST["gender"], array_keys($this->_f3->get("genders")))) {
-                $this->_f3->set("errors['gender']", "Please enter a valid gender.");
+                !in_array($_POST["gender"],
+                    array_keys($this->_f3->get("genders")))) {
+
+                $this->_f3->set("errors['gender']",
+                    "Please enter a valid gender.");
                 $isValid = false;
             }
 
@@ -84,12 +94,14 @@ class DatingController {
             if ($this->_validator->validPhone($_POST["phone"])) {
                 $_SESSION["phone"] = $_POST["phone"];
             } else {
-                $this->_f3->set("errors['phone']", "Please enter a phone number.");
+                $this->_f3->set("errors['phone']",
+                    "Please enter a phone number.");
                 $isValid = false;
             }
 
             //check premium membership
-            $this->_f3->set("premium", ((isset($_POST["premium"])? "checked": "")));
+            $this->_f3->set("premium",
+                ((isset($_POST["premium"])? "checked": "")));
             $_SESSION["premium"] = (isset($_POST["premium"])? "1" : "0");
 
             //all inputs valid, go to next page
@@ -138,10 +150,15 @@ class DatingController {
 
             $this->_f3->set("seeking", $_POST["seeking"]);
             if (isset($_POST["seeking"]) AND
-                in_array($_POST["seeking"], array_keys( $this->_f3->get("genders")))) {
+                in_array($_POST["seeking"],
+                    array_keys( $this->_f3->get("genders")))) {
+
                 $_SESSION["seeking"] = $_POST["seeking"];
+
             } else if (isset($_POST["seeking"]) AND
-                !in_array($_POST["seeking"], array_keys( $this->_f3->get("genders")))) {
+                !in_array($_POST["seeking"],
+                    array_keys($this->_f3->get("genders")))) {
+
                 $this->_f3->set("errors['seeking']", "Is that a gender?");
                 $isValid = false;
             }
@@ -152,6 +169,7 @@ class DatingController {
             }
 
             if ($isValid) {
+
                 $_SESSION["user"]->setEmail($_SESSION["email"]);
                 $_SESSION["user"]->setState($_SESSION["state"]);
                 $_SESSION["user"]->setSeeking($_SESSION["seeking"]);
@@ -183,24 +201,30 @@ class DatingController {
 
             if(isset($_POST["indoor-interests"])) {
 
-                if (!$this->_validator->validIndoor($_POST["indoor-interests"], $this->_f3)) {
+                if (!$this->_validator->validIndoor($_POST["indoor-interests"],
+                    $this->_f3)) {
+
                     $this->_f3->set("errors['indoor']", "Hmmm...Phishy!");
                     $isValid = false;
                 }
 
 
                 if ($isValid AND !empty($_POST["indoor-interests"])) {
+
                     $_SESSION["indoorInterests"] = $_POST["indoor-interests"];
                     foreach ($_SESSION["indoorInterests"] AS $v) {
+
                         $_SESSION["interests"] =
-                            $_SESSION["interests"]." ". $this->_f3->get("indoor[$v]");
+                            $_SESSION["interests"]." ".
+                            $this->_f3->get("indoor[$v]");
                     }
                 }
             }
 
             if(isset($_POST["outdoor-interests"])) {
 
-                if (!$this->_validator->validOutdoor($_POST["outdoor-interests"], $this->_f3)) {
+                if (!$this->_validator->validOutdoor($_POST["outdoor-interests"],
+                    $this->_f3)) {
                     $this->_f3->set("errors['outdoor']", "Hmmm...Phishy!");
                     $isValid = false;
                 }
@@ -210,7 +234,8 @@ class DatingController {
                     $_SESSION["outdoorInterests"] = $_POST["outdoor-interests"];
                     foreach ($_SESSION["outdoorInterests"] AS $v) {
                         $_SESSION["interests"] =
-                            $_SESSION["interests"]." ". $this->_f3->get("outdoor[$v]");
+                            $_SESSION["interests"]." ".
+                            $this->_f3->get("outdoor[$v]");
                     }
                 }
             }
@@ -230,35 +255,43 @@ class DatingController {
     public function profileImage() {
 
         $_SESSION["page"] = "Profile Image";
-
         $target_dir = "uploads/";
         $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
 
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $imageFileType = strtolower(pathinfo($target_file,
+            PATHINFO_EXTENSION));
 
         // Check if image file is a actual image or fake image
-        if (isset($_POST["submit"]) AND !empty($_FILES["fileToUpload"]["tmp_name"])) {
+        if (isset($_POST["submit"]) AND
+            !empty($_FILES["fileToUpload"]["tmp_name"])) {
 
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
             $uploadOk = true;
 
-            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-                $this->_f3->set("errors['fileFormat']", "Sorry, only JPG, JPEG, PNG files are allowed.");
+            if($imageFileType != "jpg" && $imageFileType != "png" &&
+                $imageFileType != "jpeg") {
+                $this->_f3->set("errors['fileFormat']",
+                    "Sorry, only JPG, JPEG, PNG files are allowed.");
                 $uploadOk = false;
             } elseif ($check === false) {
                 //echo "File is an image - " . $check["mime"] . ".";
-                $this->_f3->set("errors['fileExists']", "Not recognized as an image.");
+                $this->_f3->set("errors['fileExists']",
+                    "Not recognized as an image.");
                 $uploadOk = false;
                 // Allow certain file formats
             }
 
             if ($uploadOk) {
-                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"],
+                    $target_file)) {
+
+
                     $_SESSION["profileImage"] = $target_file;
                     $this->_f3->set("profileImage", $target_file);
                     $this->_f3->reroute('/profile-summary');
                 } else {
-                    $this->_f3->set("errors['fileUpload']", "Sorry, there was an error uploading your file.");
+                    $this->_f3->set("errors['fileUpload']",
+                        "Sorry, there was an error uploading your file.");
                 }
             }
         } else {
