@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * Class DatingController
+ */
 class DatingController {
 
     private $_f3;
@@ -38,13 +42,18 @@ class DatingController {
         $this->_f3->set("outdoorInterests",  array());
     }
 
+    /**
+     *
+     */
     public function home() {
         $_SESSION["page"] = "Monster Finder";
-        unset($_SESSION["profileImage"]);
         $view = new Template();
         echo $view->render("views/home.html");
     }
 
+    /**
+     *
+     */
     public function personalForm() {
         $_SESSION["page"] = "Personal";
 
@@ -126,6 +135,9 @@ class DatingController {
         echo $view->render("views/personal-form.php");
     }
 
+    /**
+     *
+     */
     public function profileForm() {
         $_SESSION["page"] = "Profile";
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -189,6 +201,9 @@ class DatingController {
 
     }
 
+    /**
+     *
+     */
     public function interestsForm() {
         $_SESSION["page"] = "Interests";
 
@@ -252,56 +267,67 @@ class DatingController {
 
     }
 
+    /**
+     *
+     */
     public function profileImage() {
 
         $_SESSION["page"] = "Profile Image";
-        $target_dir = "uploads/";
-        $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+        unset($_SESSION["profileImage"]);
 
-        $imageFileType = strtolower(pathinfo($target_file,
-            PATHINFO_EXTENSION));
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $target_dir = "uploads/";
+            $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
 
-        // Check if image file is a actual image or fake image
-        if (isset($_POST["submit"]) AND
-            !empty($_FILES["fileToUpload"]["tmp_name"])) {
+            $imageFileType = strtolower(pathinfo($target_file,
+                PATHINFO_EXTENSION));
 
-            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-            $uploadOk = true;
+            // Check if image file is a actual image or fake image
+            if (isset($_POST["submit"]) AND
+                !empty($_FILES["fileToUpload"]["tmp_name"])) {
 
-            if($imageFileType != "jpg" && $imageFileType != "png" &&
-                $imageFileType != "jpeg") {
-                $this->_f3->set("errors['fileFormat']",
-                    "Sorry, only JPG, JPEG, PNG files are allowed.");
-                $uploadOk = false;
-            } elseif ($check === false) {
-                //echo "File is an image - " . $check["mime"] . ".";
-                $this->_f3->set("errors['fileExists']",
-                    "Not recognized as an image.");
-                $uploadOk = false;
-                // Allow certain file formats
-            }
+                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+                $uploadOk = true;
 
-            if ($uploadOk) {
-                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"],
-                    $target_file)) {
-
-
-                    $_SESSION["profileImage"] = $target_file;
-                    $this->_f3->set("profileImage", $target_file);
-                    $this->_f3->reroute('/profile-summary');
-                } else {
-                    $this->_f3->set("errors['fileUpload']",
-                        "Sorry, there was an error uploading your file.");
+                if($imageFileType != "jpg" && $imageFileType != "png" &&
+                    $imageFileType != "jpeg") {
+                    $this->_f3->set("errors['fileFormat']",
+                        "Sorry, only JPG, JPEG, PNG files are allowed.");
+                    $uploadOk = false;
+                } elseif ($check === false) {
+                    //echo "File is an image - " . $check["mime"] . ".";
+                    $this->_f3->set("errors['fileExists']",
+                        "Not recognized as an image.");
+                    $uploadOk = false;
+                    // Allow certain file formats
                 }
+
+                if ($uploadOk) {
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"],
+                        $target_file)) {
+
+
+                        $_SESSION["profileImage"] = $target_file;
+                        $this->_f3->set("profileImage", $target_file);
+                        $this->_f3->reroute('/profile-summary');
+                    } else {
+                        $this->_f3->set("errors['fileUpload']",
+                            "Sorry, there was an error uploading your file.");
+                    }
+                }
+            } else {
+                $this->_f3->set("errors['fileExists']", "No file.");
             }
-        } else {
-            $this->_f3->set("errors['fileExists']", "No file.");
         }
+
 
         $view = new Template();
         echo $view->render("views/profile-image.html");
     }
 
+    /**
+     *
+     */
     public function profileSummary() {
         $_SESSION["page"] = "Summary";
 
