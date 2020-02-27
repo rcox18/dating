@@ -11,9 +11,9 @@
         <div class="row p-3 border rounded">
             <div class="col-sm-6 order-sm-2">
                 <div class="row profile-img-div">
-                    <check if="{{ @SESSION.profileImage }}">
+                    <check if="{{ @SESSION['user']->getImage() }}">
                         <true>
-                            <img src="{{ @SESSION.profileImage }}"
+                            <img src="{{ @SESSION['user']->getImage() }}"
                              class="rounded profile-img"
                              alt="Profile image">
                         </true>

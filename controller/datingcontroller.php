@@ -12,18 +12,6 @@
  * Class DatingController
  */
 class DatingController {
-    /**
-     * @return Validator
-     */
-
-
-    /**
-     * @param Validator $validator
-     */
-    public function setValidator($validator)
-    {
-        $this->_validator = $validator;
-    }
 
     private $_f3;
     private $_validator;
@@ -328,7 +316,7 @@ class DatingController {
                     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"],
                         $target_file)) {
 
-                        $_SESSION["profileImage"] = $target_file;
+                        $_SESSION["user"]->setImage($target_file);
                         $this->_f3->set("profileImage", $target_file);
                         $this->_f3->reroute('/profile-summary');
                     } else {
@@ -352,10 +340,19 @@ class DatingController {
     public function profileSummary() {
         $_SESSION["page"] = "Summary";
 
+
+
         $view = new Template();
         echo $view->render("views/profile-summary.html");
     }
 
+    /**
+     * @param Validator $validator
+     */
+    public function setValidator($validator)
+    {
+        $this->_validator = $validator;
+    }
 
     /**
      * @return Validator

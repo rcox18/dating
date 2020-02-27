@@ -15,6 +15,23 @@
 class PremiumMember extends Member {
     private $_indoorInterests;
     private $_outdoorInterests;
+    private $_image;
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->_image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->_image = $image;
+    }
 
     /**
      * PremiumMember constructor calls the parent constructor.
