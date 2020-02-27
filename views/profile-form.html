@@ -86,5 +86,8 @@
                 </div>
             </form>
         </div>
+        <check if="{{ @errors['addUser'] }}">
+                <span class="err">{{ @errors['addUser'] }}</span>
+        </check>
     </div>
 <include href="views/templates/htmlBSjsJQuery.html"></include>

@@ -28,8 +28,6 @@
                         <input class="custom-file-input form-control"
                                type="file" name="fileToUpload"
                                id="fileToUpload">
-
-
                     </div>
                     <div class="text-center">
                         <input class="btn btn-primary" type="submit"
@@ -39,5 +37,8 @@
                     </div>
                 </form>
             </div>
+            <check if="{{ @errors['addUser'] }}">
+                <span class="err">{{ @errors['addUser'] }}</span>
+            </check>
         </div>
 <include href="views/templates/htmlBSjsJQuery.html"></include>

@@ -201,7 +201,12 @@ class DatingController {
                 if (is_a($_SESSION["user"], "PremiumMember")) {
                     $this->_f3->reroute('/interests-form');
                 } else {
-                    $this->_f3->reroute('/profile-summary');
+                    $_SESSION["user"]->setId($this->_cnxn->insertMember($_SESSION["user"]));
+                    if ($_SESSION["user"]->getId() !== null) {
+                        $this->_f3->reroute('/profile-summary');
+                    }
+                    $this->_f3->set("errors['addUser']",
+                        "Sorry, there was an error adding you to the database");
                 }
 
             }
@@ -268,6 +273,7 @@ class DatingController {
             if ($isValid) {
                 $_SESSION["user"]->setIndoorInterests($_POST["indoor-interests"]);
                 $_SESSION["user"]->setOutdoorInterests($_POST["outdoor-interests"]);
+
                 $this->_f3->reroute('/profile-image');
             }
         }
@@ -319,7 +325,18 @@ class DatingController {
 
                         $_SESSION["user"]->setImage($target_file);
                         $this->_f3->set("profileImage", $target_file);
-                        $this->_f3->reroute('/profile-summary');
+
+                        $_SESSION["user"]->setId($this->_cnxn->insertMember($_SESSION["user"]));
+                        if ($_SESSION["user"]->getId() !== null) {
+                            //add in/outdoor interests into table
+                            $this->_cnxn->insertMemberInterests($_SESSION["user"]);
+                            $this->_f3->reroute('/profile-summary');
+
+                        }
+
+                        $this->_f3->set("errors['addUser']",
+                            "Sorry, there was an error adding you to the database");
+
                     } else {
                         $this->_f3->set("errors['fileUpload']",
                             "Sorry, there was an error uploading your file.");
@@ -339,12 +356,6 @@ class DatingController {
      */
     public function profileSummary() {
         $_SESSION["page"] = "Summary";
-        $_SESSION["user"]->setId($this->_cnxn->insertMember($_SESSION["user"]));
-        if ($_SESSION["user"]->getId() === null) {
-            $this->_f3->set("errors['addUser']",
-                "Sorry, there was an error adding you to the database");
-        }
-
 
         $view = new Template();
         echo $view->render("views/profile-summary.html");
