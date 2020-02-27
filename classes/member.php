@@ -13,6 +13,7 @@
  * Class Member
  */
 class Member{
+    private $id;
     private $_fname;
     private $_lname;
     private $_age;
@@ -46,6 +47,22 @@ class Member{
     public function getFname()
     {
         return $this->_fname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**

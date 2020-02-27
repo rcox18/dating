@@ -21,9 +21,30 @@ class Database {
 
     }
 
-    public function insertMember()
+    public function insertMember($newMember)
     {
+        $fname = $newMember->getFname();
+        $lname = $newMember->getLname();
+        $age = $newMember->getAge();
+        $gender = $newMember->getGender();
+        $phone = $newMember->getPhone();
+        $email = $newMember->getEmail();
+        $state = $newMember->getState();
+        $seeking = $newMember->getSeeking();
+        $bio = $newMember->getBio();
+        $premium = (is_a($newMember, "PremiumMember"))? "1" : "0";
+        $image = (is_a($newMember, "PremiumMember"))? $newMember->getImage() : "";
 
+        $sql = "INSERT INTO `member` (fname, lname, age, gender, phone, email, state, seeking, bio, premium, image) 
+            VALUES ('$fname', '$lname', '$age', '$gender', '$phone', '$email', '$state', '$seeking', '$bio', '$premium', '$image')";
+        $statement = $this->_cnxn->prepare($sql);
+
+
+        if ($statement->execute()) {
+            return $this->_cnxn->lastInsertId();
+        } else {
+            return null;
+        }
     }
 
     public function getMembers()

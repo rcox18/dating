@@ -15,6 +15,7 @@ class DatingController {
 
     private $_f3;
     private $_validator;
+    private $_cnxn;
 
     /**
      * DatingController constructor.
@@ -23,6 +24,7 @@ class DatingController {
     {
         $this->_f3 = Base::instance();;
         $this->_validator = new Validator();
+        $this->_cnxn = new Database();
 
         $this->_f3->set('DEBUG', 3);
 
@@ -55,7 +57,6 @@ class DatingController {
      */
     public function home() {
         $_SESSION["page"] = "Monster Finder";
-        unset($_SESSION["profileImage"]);
         $view = new Template();
         echo $view->render("views/home.html");
     }
@@ -65,7 +66,7 @@ class DatingController {
      */
     public function personalForm() {
         $_SESSION["page"] = "Personal";
-        unset($_SESSION["profileImage"]);
+        unset($_SESSION["user"]);
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
 
@@ -149,7 +150,6 @@ class DatingController {
      */
     public function profileForm() {
         $_SESSION["page"] = "Profile";
-        unset($_SESSION["profileImage"]);
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
@@ -339,7 +339,11 @@ class DatingController {
      */
     public function profileSummary() {
         $_SESSION["page"] = "Summary";
-
+        $_SESSION["user"]->setId($this->_cnxn->insertMember($_SESSION["user"]));
+        if ($_SESSION["user"]->getId() === null) {
+            $this->_f3->set("errors['addUser']",
+                "Sorry, there was an error adding you to the database");
+        }
 
 
         $view = new Template();

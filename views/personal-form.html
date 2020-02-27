@@ -71,7 +71,7 @@
                                 <input class="form-check-input" type="radio"
                                        name="gender" id="gender-{{ @key }}"
                                        value="{{ @key }}"
-                                        <check if="{{ @key == @gender }}">
+                                        <check if="{{ @gender AND @key == @gender }}">
                                         checked="checked"
                                         </check>>
                                     {{ @value }}
