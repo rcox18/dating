@@ -284,6 +284,7 @@ class DatingController {
 
         $_SESSION["page"] = "Profile Image";
         unset($_SESSION["profileImage"]);
+        $_SESSION['user']->setImage(null);
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $target_dir = "uploads/";
@@ -328,7 +329,6 @@ class DatingController {
                 $this->_f3->set("errors['fileExists']", "No file.");
             }
         }
-
 
         $view = new Template();
         echo $view->render("views/profile-image.html");
