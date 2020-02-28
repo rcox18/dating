@@ -16,6 +16,7 @@ class DatingController {
     private $_f3;
     private $_validator;
     private $_cnxn;
+    /*private $_user;*/
 
     /**
      * DatingController constructor.
@@ -66,41 +67,35 @@ class DatingController {
      */
     public function personalForm() {
         $_SESSION["page"] = "Personal";
-        unset($_SESSION["user"]);
+        /*$this->_user = new Member();*/
+
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
 
             $this->_f3->set("firstName", $_POST["first-name"]);
-            if ($this->_validator->validName($_POST["first-name"])) {
-                $_SESSION["firstName"] = $_POST["first-name"];
-            } else {
+            if (!$this->_validator->validName($_POST["first-name"])) {
+                /*$_SESSION["firstName"] = $_POST["first-name"];*/
                 $this->_f3->set("errors['fName']", "Please enter a name.");
                 $isValid = false;
             }
 
             $this->_f3->set("lastName", $_POST["last-name"]);
-            if ($this->_validator->validName($_POST["last-name"])) {
-                $_SESSION["lastName"] = $_POST["last-name"];
-            } else {
+            if (!$this->_validator->validName($_POST["last-name"])) {
+               /* $_SESSION["lastName"] = $_POST["last-name"];*/
                 $this->_f3->set("errors['lName']", "Please enter a name.");
                 $isValid = false;
             }
 
             $this->_f3->set("age", $_POST["age"]);
-            if ($this->_validator->validAge($_POST["age"])) {
-                $_SESSION["age"] = $_POST["age"];
-            } else {
+            if (!$this->_validator->validAge($_POST["age"])) {
+                /*$_SESSION["age"] = $_POST["age"];*/
                 $this->_f3->set("errors['age']", "Must be 18-118 years old.");
                 $isValid = false;
             }
 
             $this->_f3->set("gender", $_POST["gender"]);
-            if (isset($_POST["gender"]) AND
-                in_array($_POST["gender"],
-                    array_keys($this->_f3->get("genders")))) {
-
-                $_SESSION["gender"] = $_POST["gender"];
-            } else if (isset($_POST["gender"]) AND
+            /*$_SESSION["gender"] = $_POST["gender"];*/
+             if (isset($_POST["gender"]) AND
                 !in_array($_POST["gender"],
                     array_keys($this->_f3->get("genders")))) {
 
@@ -110,32 +105,33 @@ class DatingController {
             }
 
             $this->_f3->set("phone", $_POST["phone"]);
-            if ($this->_validator->validPhone($_POST["phone"])) {
-                $_SESSION["phone"] = $_POST["phone"];
-            } else {
+            if (!$this->_validator->validPhone($_POST["phone"])) {
+                /*$_SESSION["phone"] = $_POST["phone"];*/
                 $this->_f3->set("errors['phone']",
                     "Please enter a phone number.");
                 $isValid = false;
             }
 
-            //check premium membership
+            //check premium membership and make it sticky
             $this->_f3->set("premium",
                 ((isset($_POST["premium"])? "checked": "")));
-            $_SESSION["premium"] = (isset($_POST["premium"])? "1" : "0");
+            /*$_SESSION["premium"] = (isset($_POST["premium"])? "1" : "0");*/
 
             //all inputs valid, go to next page
             if ($isValid) {
-                if ($_SESSION["premium"] == "0") {
-                    $user = new Member($_SESSION["firstName"],
-                        $_SESSION["lastName"], $_SESSION["age"],
-                        $_SESSION["gender"], $_SESSION["phone"]);
+
+                if (isset($_POST["premium"])){
+                    $_SESSION["user"] = new PremiumMember($_POST["first-name"],
+                        $_POST["last-name"], $_POST["age"],
+                        $_POST["gender"], $_POST["phone"]);
                 } else {
-                    $user = new PremiumMember($_SESSION["firstName"],
-                        $_SESSION["lastName"], $_SESSION["age"],
-                        $_SESSION["gender"], $_SESSION["phone"]);
+                    $_SESSION["user"] = new Member($_POST["first-name"],
+                        $_POST["last-name"], $_POST["age"],
+                        $_POST["gender"], $_POST["phone"]);
                 }
-                $this->_f3->set("user", $user);
-                $_SESSION["user"] = $user;
+
+                /*$this->_f3->set("user", $user);*/
+                /*$_SESSION["user"] = $this->_user;*/
                 $this->_f3->reroute('/profile-form');
             }
         }
@@ -150,35 +146,29 @@ class DatingController {
      */
     public function profileForm() {
         $_SESSION["page"] = "Profile";
-
+        /*$this->_user = $_SESSION["user"];*/
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
 
             $this->_f3->set("email", $_POST["email"]);
-            if ($this->_validator->validEmail( $_POST["email"])) {
-                $_SESSION["email"] = $_POST["email"];
-            } else {
+            if (!$this->_validator->validEmail( $_POST["email"])) {
+                /*$_SESSION["email"] = $_POST["email"];*/
                 $this->_f3->set("errors['email']", "Please enter an email.");
                 $isValid = false;
             }
 
             $this->_f3->set("state", $_POST["state"]);
-            if (in_array($_POST["state"],  $this->_f3->get("states")) OR
-                $_POST["state"]==="none") {
-                $_SESSION["state"] = $_POST["state"];
-            } else {
+            if (!in_array($_POST["state"],  $this->_f3->get("states")) AND
+                $_POST["state"]!=="none") {
+                /*$_SESSION["state"] = $_POST["state"];*/
                 $this->_f3->set("errors['state']", "Are you sure?");
                 $isValid = false;
             }
 
             $this->_f3->set("seeking", $_POST["seeking"]);
+            /*$_SESSION["seeking"] = $_POST["seeking"];*/
+
             if (isset($_POST["seeking"]) AND
-                in_array($_POST["seeking"],
-                    array_keys( $this->_f3->get("genders")))) {
-
-                $_SESSION["seeking"] = $_POST["seeking"];
-
-            } else if (isset($_POST["seeking"]) AND
                 !in_array($_POST["seeking"],
                     array_keys($this->_f3->get("genders")))) {
 
@@ -187,28 +177,29 @@ class DatingController {
             }
 
             $this->_f3->set("bio", $_POST["bio"]);
-            if (isset($_POST["bio"]) ) {
+            /*if (isset($_POST["bio"]) ) {
                 $_SESSION["bio"] = $_POST["bio"];
-            }
+            }*/
 
             if ($isValid) {
 
-                $_SESSION["user"]->setEmail($_SESSION["email"]);
-                $_SESSION["user"]->setState($_SESSION["state"]);
-                $_SESSION["user"]->setSeeking($_SESSION["seeking"]);
-                $_SESSION["user"]->setBio($_SESSION["bio"]);
+                $_SESSION["user"]->setEmail($_POST["email"]);
+                $_SESSION["user"]->setState(($_POST["state"] === "none") ? "" : $_POST["state"]);
+                $_SESSION["user"]->setSeeking( (isset($_POST["seeking"])) ? $_POST["seeking"] : "");
+                $_SESSION["user"]->setBio((isset($_POST["bio"])) ? $_POST["bio"] : "");
 
                 if (is_a($_SESSION["user"], "PremiumMember")) {
+                    /*$_SESSION["user"] = $this->_user;*/
                     $this->_f3->reroute('/interests-form');
                 } else {
                     $_SESSION["user"]->setId($this->_cnxn->insertMember($_SESSION["user"]));
                     if ($_SESSION["user"]->getId() !== null) {
+                       /* $_SESSION["user"] = $this->_user;*/
                         $this->_f3->reroute('/profile-summary');
                     }
                     $this->_f3->set("errors['addUser']",
                         "Sorry, there was an error adding you to the database");
                 }
-
             }
         }
 
@@ -221,13 +212,14 @@ class DatingController {
      */
     public function interestsForm() {
         $_SESSION["page"] = "Interests";
+        /*$this->_user = $_SESSION["user"];*/
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
 
             $this->_f3->set("indoorInterests",  $_POST["indoor-interests"]);
             $this->_f3->set("outdoorInterests",  $_POST["outdoor-interests"]);
-            $_SESSION["interests"] ="";
+            /*$_SESSION["interests"] ="";*/
 
             if(isset($_POST["indoor-interests"])) {
 
@@ -239,7 +231,7 @@ class DatingController {
                 }
 
 
-                if ($isValid AND !empty($_POST["indoor-interests"])) {
+               /* if ($isValid AND !empty($_POST["indoor-interests"])) {
 
                     $_SESSION["indoorInterests"] = $_POST["indoor-interests"];
                     foreach ($_SESSION["indoorInterests"] AS $v) {
@@ -248,7 +240,7 @@ class DatingController {
                             $_SESSION["interests"]." ".
                             $this->_f3->get("indoor[$v]");
                     }
-                }
+                }*/
             }
 
             if(isset($_POST["outdoor-interests"])) {
@@ -260,14 +252,14 @@ class DatingController {
                 }
 
 
-                if ($isValid AND !empty($_POST["outdoor-interests"])) {
+                /*if ($isValid AND !empty($_POST["outdoor-interests"])) {
                     $_SESSION["outdoorInterests"] = $_POST["outdoor-interests"];
                     foreach ($_SESSION["outdoorInterests"] AS $v) {
                         $_SESSION["interests"] =
                             $_SESSION["interests"]." ".
                             $this->_f3->get("outdoor[$v]");
                     }
-                }
+                }*/
             }
 
             if ($isValid) {
@@ -289,7 +281,6 @@ class DatingController {
     public function profileImage() {
 
         $_SESSION["page"] = "Profile Image";
-        unset($_SESSION["profileImage"]);
         $_SESSION['user']->setImage(null);
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -345,6 +336,15 @@ class DatingController {
             } else {
                 $this->_f3->set("errors['fileExists']", "No file.");
             }
+            //if skip was pressed
+            if (isset($_POST["skip"])) {
+                $_SESSION["user"]->setId($this->_cnxn->insertMember($_SESSION["user"]));
+                if ($_SESSION["user"]->getId() !== null) {
+                    //add in/outdoor interests into table
+                    $this->_cnxn->insertMemberInterests($_SESSION["user"]);
+                    $this->_f3->reroute('/profile-summary');
+                }
+            }
         }
 
         $view = new Template();
@@ -356,6 +356,54 @@ class DatingController {
      */
     public function profileSummary() {
         $_SESSION["page"] = "Summary";
+        /*$_SESSION["user"] = $this->_user;*/
+        $view = new Template();
+        echo $view->render("views/profile-summary.html");
+    }
+
+    public function admin() {
+        $_SESSION["page"] = "Members";
+        $_SESSION["members"] = $this->_cnxn->getMembers();
+
+        for ($i = 0; $i < sizeof($_SESSION["members"]);  $i++) {
+            $_SESSION["members"][$i]["Interests"] = $this->_cnxn->getInterests($_SESSION["members"][$i]["ID"]);
+        }
+
+
+        /*foreach ($_SESSION["members"] AS $index => $member) {
+            //$id = $member["ID"];
+            $member["Interests"] = "something"; //;
+        }*/
+
+        $view = new Template();
+        echo $view->render("views/admin.html");
+    }
+
+    public function showMember($id){
+        if ($id === "index.php") {
+            $this->_f3->reroute('/');
+        }
+
+        $member = $this->_cnxn->getMember($id);
+        if ($member[0]["premium"] == "0") {
+            $_SESSION["user"] = new Member();
+        } else {
+            $_SESSION["user"] = new PremiumMember();
+            $_SESSION["user"]->setInterests($this->_cnxn->getInterests($id));
+            $_SESSION["user"]->setImage($member[0]["image"]);
+        }
+
+
+        $_SESSION["user"]->setFname($member[0]["fname"]);
+        $_SESSION["user"]->setLname($member[0]["lname"]);
+        $_SESSION["user"]->setAge($member[0]["age"]);
+        $_SESSION["user"]->setGender($member[0]['gender']);
+        $_SESSION["user"]->setPhone($member[0]["phone"]);
+        $_SESSION["user"]->setEmail($member[0]["email"]);
+        $_SESSION["user"]->setState($member[0]["state"]);
+        $_SESSION["user"]->setSeeking($member[0]["seeking"]);
+        $_SESSION["user"]->setBio($member[0]['bio']);
+
 
         $view = new Template();
         echo $view->render("views/profile-summary.html");

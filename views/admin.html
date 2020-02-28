@@ -1,0 +1,47 @@
+<!--
+    Robert Cox
+	2/7/2020
+	url: http://rcox.greenriverdev.com/IT328/dating/{view = /profile-summary}
+	The profile summary page view for rcox.greenriverdev.com/IT328/dating.
+	A dating website for monsters.
+-->
+<include href="views/templates/htmlHead.html"></include>
+    <include href="views/templates/site-nav-bar.html"></include>
+<div class="container">
+<h1>Members</h1>
+<check if="{{ @SESSION['members'] }}"></check>
+
+<table class="table table-hover table-striped" id="table">
+  <thead>
+    <repeat group="{{ @SESSION['members'][0] }}" key="{{ @key }}" value="{{ @value }}">
+        <th>{{ @key }}</th>
+    </repeat>
+  </thead>
+  <tbody>
+  <repeat group="{{ @SESSION['members'] }}" key="{{ @key }}" value="{{ @value }}">
+    <tr>
+      <repeat group="{{ @value }}" key="{{ @k }}" value="{{ @v }}">
+        <check if="{{ @k == 'Premium' }}">
+          <true>
+            <check if="{{ @v == '0' }}">
+              <true>
+                <td><input type="checkbox"></td>
+              </true>
+              <false>
+                <td>
+                  <input type="checkbox" checked>
+                </td>
+              </false>
+            </check>
+          </true>
+          <false>
+            <td>{{ @v }}</td>
+          </false>
+        </check>
+      </repeat>
+    </tr>
+  </repeat>
+  </tbody>
+</table>
+</div>
+<include href="views/templates/htmlBSjsJQuery.html"></include>

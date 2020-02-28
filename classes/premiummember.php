@@ -15,7 +15,25 @@
 class PremiumMember extends Member {
     private $_indoorInterests;
     private $_outdoorInterests;
+    private $interests;
     private $_image;
+
+    /**
+     * @return mixed
+     */
+    public function getInterests()
+    {
+        return $this->interests;
+    }
+
+    /**
+     * @param mixed $interests
+     */
+    public function setInterests($interests)
+    {
+        $this->interests = $interests;
+    }
+
 
     /**
      * @return mixed
@@ -36,7 +54,7 @@ class PremiumMember extends Member {
     /**
      * PremiumMember constructor calls the parent constructor.
      */
-    public function __construct($fname, $lname, $age, $gender, $phone)
+    public function __construct($fname=null, $lname=null, $age=null, $gender=null, $phone=null)
     {
         parent::__construct($fname, $lname, $age, $gender, $phone);
     }

@@ -58,45 +58,71 @@ class Database {
         $id = $newMember->getID();
         $indoorInterests = $newMember->getIndoorInterests();
         $outdoorInterests = $newMember->getOutdoorInterests();
-        foreach ($indoorInterests AS $interest ) {
-            $sql = "SELECT interestID FROM interest WHERE interest = '$interest'";
-            $statement = $this->_cnxn->prepare($sql);
-            $statement->execute();
-            $result = $statement->fetch(PDO::FETCH_ASSOC);
-            $interestID = $result['interestID'];
-
-            $sql2 = "INSERT INTO memberInterest (memberID, interestID) VALUES ('$id', '$interestID')";
-            $statement2 = $this->_cnxn->prepare($sql2);
-            $statement2->execute();
-            $result2 = $statement2->fetch(PDO::FETCH_ASSOC);
+        if (!empty($indoorInterests)) {
+            foreach ($indoorInterests AS $interest ) {
+                $this->insertInterest($interest, $id);
+            }
         }
 
-        foreach ($outdoorInterests AS $interest ) {
-            $sql3 = "SELECT interestID FROM interest WHERE interest = '$interest'";
-            $statement3 = $this->_cnxn->prepare($sql3);
-            $statement3->execute();
-            $result3 = $statement3->fetch(PDO::FETCH_ASSOC);
-            $interestID2 = $result3['interestID'];
-
-            $sql4 = "INSERT INTO memberInterest (memberID, interestID) VALUES ('$id', '$interestID2')";
-            $statement4 = $this->_cnxn->prepare($sql4);
-            $statement4->execute();
-            $result4 = $statement4->fetch(PDO::FETCH_ASSOC);
+        if (!empty($outdoorInterests)) {
+            foreach ($outdoorInterests AS $interest ) {
+                $this->insertInterest($interest, $id);
+            }
         }
+    }
+
+    public function insertInterest($interest, $id) {
+
+        $sql = "SELECT interestID FROM interest WHERE interest = '$interest'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $interestID = $result['interestID'];
+
+        $sql2 = "INSERT INTO memberInterest (memberID, interestID) VALUES ('$id', '$interestID')";
+        $statement2 = $this->_cnxn->prepare($sql2);
+        $statement2->execute();
+        $result2 = $statement2->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getMembers()
     {
-
+        $sql = "SELECT memberID AS ID, CONCAT(fname, ' ', lname) as Name, 
+            age AS Age, phone AS Phone, email AS Email, state AS State, 
+            gender AS Gender, seeking AS Seeking, premium AS Premium
+            FROM member 
+            ORDER BY lname";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
-    public function getMember($memberID)
+    public function getMember($id)
     {
-
+        $sql = "SELECT *
+            FROM member 
+            WHERE memberID = '$id'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     public function getInterests($memberID)
     {
-
+        $sql = "SELECT interestID  FROM memberInterest WHERE memberID = '$memberID'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $interest = "";
+        foreach ($results AS $row) {
+            $intID = $row["interestID"];
+            $sql2 = "SELECT interest  FROM interest WHERE interestID = '$intID'";
+            $statement = $this->_cnxn->prepare($sql2);
+            $statement->execute();
+            $interest .= $statement->fetch()["interest"].", ";
+        }
+        return substr($interest, 0, strlen($interest)-2);
     }
 }

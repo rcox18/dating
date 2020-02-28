@@ -50,14 +50,20 @@
                         <check if="{{ is_a(@SESSION.user, 'PremiumMember') }}">
                             <li class="list-group-item">
                             Interests:
-                                <repeat group="{{ @SESSION['user']->getIndoorInterests() }}"
-                                        key="{{ @key }}" value="{{ @val }}">
-                                    {{ @val }}
-                                </repeat>
-                                <repeat group="{{ @SESSION['user']->getOutdoorInterests() }}"
-                                        key="{{ @key }}" value="{{ @val }}">
-                                    {{ @val }}
-                                </repeat>
+                                <check if="{{ @SESSION['user']->getInterests() }}">
+                                    <true>{{ @SESSION['user']->getInterests() }}</true>
+                                    <false>
+                                       <repeat group="{{ @SESSION['user']->getIndoorInterests() }}"
+                                               key="{{ @key }}" value="{{ @val }}">
+                                            {{ @val }}
+                                        </repeat>
+                                        <repeat group="{{ @SESSION['user']->getOutdoorInterests() }}"
+                                                key="{{ @key }}" value="{{ @val }}">
+                                            {{ @val }}
+                                        </repeat>
+                                    </false>
+                                </check>
+
                             </li>
                         </check>
                     </ul>
@@ -69,7 +75,6 @@
                     Contact Me!
                 </a>
             </div>
-
         </div>
     </div>
 <include href="views/templates/htmlBSjsJQuery.html"></include>

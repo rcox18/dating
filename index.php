@@ -54,5 +54,16 @@ $datingController->getF3()->route("GET|POST /profile-summary", function () {
     $datingController->profileSummary();
 });
 
+$datingController->getF3()->route("GET|POST /admin", function () {
+    global $datingController;
+    $datingController->admin();
+});
+
+$datingController->getF3()->route("GET|POST /@item",
+    function ($datingController, $params) {
+    global $datingController;
+    $datingController->showMember($params["item"]);
+});
+
 //run fat free
 $datingController->getF3()->run();
