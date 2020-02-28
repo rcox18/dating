@@ -54,11 +54,13 @@ $datingController->getF3()->route("GET|POST /profile-summary", function () {
     $datingController->profileSummary();
 });
 
+//admin (members table) page
 $datingController->getF3()->route("GET|POST /admin", function () {
     global $datingController;
     $datingController->admin();
 });
 
+//show the clicked member
 $datingController->getF3()->route("GET|POST /@item",
     function ($datingController, $params) {
     global $datingController;

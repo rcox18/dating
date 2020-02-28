@@ -6,19 +6,21 @@ class Database {
 
     public function __construct()
     {
-        try {
-            //CREATING A NEW PDO CONNECTION
-            $this->_cnxn = new PDO(DATING_DB_DSN, DB_USERNAME, DB_PASSWORD);
-//            echo "Connected!";
-            //if there is an error, print error message
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
+        $this->connect();
     }
 
     public function connect()
     {
-
+        try {
+            //CREATING A NEW PDO CONNECTION
+            $this->_cnxn =
+                new PDO(DATING_DB_DSN,
+                    DB_USERNAME,
+                    DB_PASSWORD);
+            //if there is an error, print error message
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function insertMember($newMember)
@@ -32,20 +34,18 @@ class Database {
         $state = $newMember->getState();
         $seeking = $newMember->getSeeking();
         $bio = $newMember->getBio();
-        $premium = (is_a($newMember, "PremiumMember"))? "1" : "0";
-        $image = (is_a($newMember, "PremiumMember"))? $newMember->getImage() : "";
+        $premium =
+            (is_a($newMember, "PremiumMember"))?
+                "1" : "0";
+        $image =
+            (is_a($newMember, "PremiumMember"))?
+                $newMember->getImage() : "";
 
-
-
-
-
-        $sql = "INSERT INTO `member` (fname, lname, age, gender, phone, email, state, seeking, bio, premium, image) 
-            VALUES ('$fname', '$lname', '$age', '$gender', '$phone', '$email', '$state', '$seeking', '$bio', '$premium', '$image')";
-
-
+        $sql = "INSERT INTO `member` (fname, lname, age, gender, phone, email, 
+                                      state, seeking, bio, premium, image) 
+                VALUES ('$fname', '$lname', '$age', '$gender', '$phone', 
+                '$email', '$state', '$seeking', '$bio', '$premium', '$image')";
         $statement = $this->_cnxn->prepare($sql);
-
-
         if ($statement->execute()) {
             return $this->_cnxn->lastInsertId();
         } else {
@@ -54,7 +54,6 @@ class Database {
     }
 
     public function insertMemberInterests($newMember) {
-
         $id = $newMember->getID();
         $indoorInterests = $newMember->getIndoorInterests();
         $outdoorInterests = $newMember->getOutdoorInterests();
@@ -79,7 +78,8 @@ class Database {
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         $interestID = $result['interestID'];
 
-        $sql2 = "INSERT INTO memberInterest (memberID, interestID) VALUES ('$id', '$interestID')";
+        $sql2 = "INSERT INTO memberInterest (memberID, interestID) 
+                 VALUES ('$id', '$interestID')";
         $statement2 = $this->_cnxn->prepare($sql2);
         $statement2->execute();
         $result2 = $statement2->fetch(PDO::FETCH_ASSOC);
@@ -111,14 +111,18 @@ class Database {
 
     public function getInterests($memberID)
     {
-        $sql = "SELECT interestID  FROM memberInterest WHERE memberID = '$memberID'";
+        $sql = "SELECT interestID  
+                FROM memberInterest 
+                WHERE memberID = '$memberID'";
         $statement = $this->_cnxn->prepare($sql);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         $interest = "";
         foreach ($results AS $row) {
             $intID = $row["interestID"];
-            $sql2 = "SELECT interest  FROM interest WHERE interestID = '$intID'";
+            $sql2 = "SELECT interest  
+                     FROM interest 
+                     WHERE interestID = '$intID'";
             $statement = $this->_cnxn->prepare($sql2);
             $statement->execute();
             $interest .= $statement->fetch()["interest"].", ";

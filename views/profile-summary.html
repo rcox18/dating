@@ -11,7 +11,8 @@
         <div class="row p-3 border rounded">
             <div class="col-sm-6 order-sm-2">
                 <div class="row profile-img-div">
-                    <check if="{{ is_a(@SESSION['user'], 'PremiumMember') AND @SESSION['user']->getImage() !== null }}">
+                    <check if="{{ is_a(@SESSION['user'], 'PremiumMember') AND
+                                  @SESSION['user']->getImage() !== '' }}">
                         <true>
                             <img src="{{@SESSION['user']->getImage()}}"
                              class="rounded profile-img"

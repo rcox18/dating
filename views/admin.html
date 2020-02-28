@@ -13,14 +13,17 @@
 
 <table class="table table-hover table-striped" id="table">
   <thead>
-    <repeat group="{{ @SESSION['members'][0] }}" key="{{ @key }}" value="{{ @value }}">
+    <repeat group="{{ @SESSION['members'][0] }}"
+            key="{{ @key }}" value="{{ @value }}">
         <th>{{ @key }}</th>
     </repeat>
   </thead>
   <tbody>
-  <repeat group="{{ @SESSION['members'] }}" key="{{ @key }}" value="{{ @value }}">
+  <repeat group="{{ @SESSION['members'] }}"
+          key="{{ @key }}" value="{{ @value }}">
     <tr>
-      <repeat group="{{ @value }}" key="{{ @k }}" value="{{ @v }}">
+      <repeat group="{{ @value }}"
+              key="{{ @k }}" value="{{ @v }}">
         <check if="{{ @k == 'Premium' }}">
           <true>
             <check if="{{ @v == '0' }}">
