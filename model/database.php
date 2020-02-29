@@ -6,6 +6,53 @@
  * @since      2/28/2020
  * @author     Robert Cox
  * @version    1.0.0
+ *
+ * ****************CREATE DATABASE CODE******************
+ * CREATE TABLE `member` (
+    `memberID` int(11) NOT NULL,
+    `fname` varchar(30) NOT NULL,
+    `lname` varchar(30) NOT NULL,
+    `age` int(11) NOT NULL,
+    `gender` varchar(20) NOT NULL,
+    `phone` varchar(20) NOT NULL,
+    `email` varchar(50) NOT NULL,
+    `state` varchar(20) NOT NULL,
+    `seeking` varchar(10) NOT NULL,
+    `bio` varchar(500) NOT NULL,
+    `premium` tinyint(4) NOT NULL,
+    `image` varchar(100) NOT NULL
+    );
+ *
+ * ALTER TABLE `member`
+    ADD PRIMARY KEY (`memberID`);
+ *
+ *ALTER TABLE `member`
+    MODIFY `memberID` int(11) NOT NULL AUTO_INCREMENT;
+ *
+ ********************************************************
+ *
+ * CREATE TABLE `memberInterest` (
+    `memberID` int(11) NOT NULL,
+    `interestID` int(11) NOT NULL
+    );
+ *
+ * ALTER TABLE `memberInterest`
+    ADD KEY `memberID` (`memberID`),
+    ADD KEY `interestID` (`interestID`);
+ *
+ * *******************************************************
+ *
+ * CREATE TABLE `interest` (
+    `interestID` int(11) NOT NULL,
+    `interest` varchar(20) NOT NULL,
+    `type` varchar(20) NOT NULL
+    );
+ *
+ * ALTER TABLE `interest`
+    ADD PRIMARY KEY (`interestID`);
+ *
+ * ALTER TABLE `interest`
+    MODIFY `interestID` int(11) NOT NULL AUTO_INCREMENT;
  */
 
 require ("../../../connection.php");
