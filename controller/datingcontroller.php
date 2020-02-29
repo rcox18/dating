@@ -15,7 +15,7 @@ class DatingController {
 
     private $_f3;
     private $_validator;
-    private $_cnxn;
+    private $_db;
 
     /**
      * DatingController constructor.
@@ -24,7 +24,7 @@ class DatingController {
     {
         $this->_f3 = Base::instance();;
         $this->_validator = new Validator();
-        $this->_cnxn = new Database();
+        $this->_db = new Database();
 
         $this->_f3->set('DEBUG', 3);
 
@@ -173,7 +173,7 @@ class DatingController {
                 if (is_a($_SESSION["user"], "PremiumMember")) {
                     $this->_f3->reroute('/interests-form');
                 } else {
-                    $_SESSION["user"]->setId($this->_cnxn->insertMember($_SESSION["user"]));
+                    $_SESSION["user"]->setId($this->_db->insertMember($_SESSION["user"]));
                     if ($_SESSION["user"]->getId() !== null) {
                         $this->_f3->reroute('/profile-summary');
                     }
@@ -271,10 +271,10 @@ class DatingController {
                         $_SESSION["user"]->setImage($target_file);
                         $this->_f3->set("profileImage", $target_file);
 
-                        $_SESSION["user"]->setId($this->_cnxn->insertMember($_SESSION["user"]));
+                        $_SESSION["user"]->setId($this->_db->insertMember($_SESSION["user"]));
                         if ($_SESSION["user"]->getId() !== null) {
                             //add in/outdoor interests into table
-                            $this->_cnxn->insertMemberInterests($_SESSION["user"]);
+                            $this->_db->insertMemberInterests($_SESSION["user"]);
                             $this->_f3->reroute('/profile-summary');
 
                         }
@@ -292,10 +292,10 @@ class DatingController {
             }
             //if skip was pressed
             if (isset($_POST["skip"])) {
-                $_SESSION["user"]->setId($this->_cnxn->insertMember($_SESSION["user"]));
+                $_SESSION["user"]->setId($this->_db->insertMember($_SESSION["user"]));
                 if ($_SESSION["user"]->getId() !== null) {
                     //add in/outdoor interests into table
-                    $this->_cnxn->insertMemberInterests($_SESSION["user"]);
+                    $this->_db->insertMemberInterests($_SESSION["user"]);
                     $this->_f3->reroute('/profile-summary');
                 }
             }
@@ -318,11 +318,11 @@ class DatingController {
      */
     public function admin() {
         $_SESSION["page"] = "Members";
-        $_SESSION["members"] = $this->_cnxn->getMembers();
+        $_SESSION["members"] = $this->_db->getMembers();
 
         for ($i = 0; $i < sizeof($_SESSION["members"]);  $i++) {
             $_SESSION["members"][$i]["Interests"] =
-                $this->_cnxn->getInterests($_SESSION["members"][$i]["ID"]);
+                $this->_db->getInterests($_SESSION["members"][$i]["ID"]);
         }
 
         $view = new Template();
@@ -337,12 +337,12 @@ class DatingController {
             $this->_f3->reroute('/');
         }
 
-        $member = $this->_cnxn->getMember($id);
+        $member = $this->_db->getMember($id);
         if ($member[0]["premium"] == "0") {
             $_SESSION["user"] = new Member();
         } else {
             $_SESSION["user"] = new PremiumMember();
-            $_SESSION["user"]->setInterests($this->_cnxn->getInterests($id));
+            $_SESSION["user"]->setInterests($this->_db->getInterests($id));
             $_SESSION["user"]->setImage($member[0]["image"]);
         }
 

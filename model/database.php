@@ -43,9 +43,20 @@ class Database {
 
         $sql = "INSERT INTO `member` (fname, lname, age, gender, phone, email, 
                                       state, seeking, bio, premium, image) 
-                VALUES ('$fname', '$lname', '$age', '$gender', '$phone', 
-                '$email', '$state', '$seeking', '$bio', '$premium', '$image')";
+                VALUES (:fname, :lname, :age, :gender, :phone, 
+                :email, :state, :seeking, :bio, :premium, :image)";
         $statement = $this->_cnxn->prepare($sql);
+        $statement->bindParam(":fname", $fname);
+        $statement->bindParam(":lname", $lname);
+        $statement->bindParam(":age", $age, PDO::PARAM_INT);
+        $statement->bindParam(":gender", $gender);
+        $statement->bindParam(":phone", $phone);
+        $statement->bindParam(":email", $email);
+        $statement->bindParam(":state", $state);
+        $statement->bindParam(":seeking", $seeking);
+        $statement->bindParam(":bio", $bio);
+        $statement->bindParam(":premium", $premium, PDO::PARAM_INT);
+        $statement->bindParam(":image", $image);
         if ($statement->execute()) {
             return $this->_cnxn->lastInsertId();
         } else {
@@ -72,15 +83,22 @@ class Database {
 
     public function insertInterest($interest, $id) {
 
-        $sql = "SELECT interestID FROM interest WHERE interest = '$interest'";
+        $sql = "SELECT interestID FROM interest WHERE interest = :interest";
+
         $statement = $this->_cnxn->prepare($sql);
+        $statement->bindParam(":interest", $interest);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         $interestID = $result['interestID'];
 
         $sql2 = "INSERT INTO memberInterest (memberID, interestID) 
-                 VALUES ('$id', '$interestID')";
+                 VALUES (:id, :interestID)";
+
         $statement2 = $this->_cnxn->prepare($sql2);
+        $statement2->bindParam(":id", $id,
+            PDO::PARAM_INT);
+        $statement2->bindParam(":interestID", $interestID,
+            PDO::PARAM_INT);
         $statement2->execute();
         $result2 = $statement2->fetch(PDO::FETCH_ASSOC);
     }
@@ -102,8 +120,11 @@ class Database {
     {
         $sql = "SELECT *
             FROM member 
-            WHERE memberID = '$id'";
+            WHERE memberID = :id";
+
         $statement = $this->_cnxn->prepare($sql);
+        $statement->bindParam(":id", $id,
+            PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
@@ -113,17 +134,24 @@ class Database {
     {
         $sql = "SELECT interestID  
                 FROM memberInterest 
-                WHERE memberID = '$memberID'";
+                WHERE memberID = :memberID";
+
         $statement = $this->_cnxn->prepare($sql);
+        $statement->bindParam(":memberID", $memberID,
+            PDO::PARAM_INT);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         $interest = "";
+
         foreach ($results AS $row) {
             $intID = $row["interestID"];
             $sql2 = "SELECT interest  
                      FROM interest 
-                     WHERE interestID = '$intID'";
+                     WHERE interestID = :intID";
+
             $statement = $this->_cnxn->prepare($sql2);
+            $statement->bindParam(":intID", $intID,
+                PDO::PARAM_INT);
             $statement->execute();
             $interest .= $statement->fetch()["interest"].", ";
         }
