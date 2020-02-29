@@ -271,10 +271,13 @@ class DatingController {
                         $_SESSION["user"]->setImage($target_file);
                         $this->_f3->set("profileImage", $target_file);
 
-                        $_SESSION["user"]->setId($this->_db->insertMember($_SESSION["user"]));
+                        $_SESSION["user"]->setId(
+                            $this->_db->insertMember($_SESSION["user"]));
                         if ($_SESSION["user"]->getId() !== null) {
                             //add in/outdoor interests into table
                             $this->_db->insertMemberInterests($_SESSION["user"]);
+                            $_SESSION["user"]->setInterests(
+                                $this->_db->getInterests($_SESSION["user"]->getID()));
                             $this->_f3->reroute('/profile-summary');
 
                         }
@@ -292,10 +295,13 @@ class DatingController {
             }
             //if skip was pressed
             if (isset($_POST["skip"])) {
-                $_SESSION["user"]->setId($this->_db->insertMember($_SESSION["user"]));
+                $_SESSION["user"]->setId(
+                    $this->_db->insertMember($_SESSION["user"]));
                 if ($_SESSION["user"]->getId() !== null) {
                     //add in/outdoor interests into table
                     $this->_db->insertMemberInterests($_SESSION["user"]);
+                    $_SESSION["user"]->setInterests(
+                        $this->_db->getInterests($_SESSION["user"]->getID()));
                     $this->_f3->reroute('/profile-summary');
                 }
             }

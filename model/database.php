@@ -1,14 +1,36 @@
 <?php
+/**
+ *  Database connection controller for Monster Date website and database.
+ *
+ * @link       http://rcox.greenriverdev.com/IT328/dating
+ * @since      2/28/2020
+ * @author     Robert Cox
+ * @version    1.0.0
+ */
+
 require ("../../../connection.php");
+
+/**
+ * Class Database
+ */
 class Database {
 
+    /**
+     * @var $this connection to the database
+     */
     private $_cnxn;
 
+    /**
+     * Database constructor.
+     */
     public function __construct()
     {
         $this->connect();
     }
 
+    /**
+     * Establishes the connection
+     */
     public function connect()
     {
         try {
@@ -23,6 +45,13 @@ class Database {
         }
     }
 
+    /**
+     * Inserts the new member Object into the DB.
+     * If successful, return the new member id.
+     *
+     * @param $newMember Member object
+     * @return int|null actually
+     */
     public function insertMember($newMember)
     {
         $fname = $newMember->getFname();
@@ -64,6 +93,11 @@ class Database {
         }
     }
 
+    /**
+     * Adds the new user's interests into the DB.
+     *
+     * @param $newMember Member object
+     */
     public function insertMemberInterests($newMember) {
         $id = $newMember->getID();
         $indoorInterests = $newMember->getIndoorInterests();
@@ -81,6 +115,12 @@ class Database {
         }
     }
 
+    /**
+     * Adds the new user's interests into the DB.
+     *
+     * @param $interest interest to insert
+     * @param $id id of member to attach the interest to
+     */
     public function insertInterest($interest, $id) {
 
         $sql = "SELECT interestID FROM interest WHERE interest = :interest";
@@ -103,6 +143,9 @@ class Database {
         $result2 = $statement2->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @return array  all members of the monster DB
+     */
     public function getMembers()
     {
         $sql = "SELECT memberID AS ID, CONCAT(fname, ' ', lname) as Name, 
@@ -116,6 +159,12 @@ class Database {
         return $result;
     }
 
+    /**
+     * Get individual members by id from the DB
+     *
+     * @param $id id of member to get
+     * @return array  all member properties
+     */
     public function getMember($id)
     {
         $sql = "SELECT *
@@ -130,6 +179,12 @@ class Database {
         return $result;
     }
 
+    /**
+     * Returns a comma separated string of the member's interests
+     *
+     * @param $memberID id of member
+     * @return bool|string  interests
+     */
     public function getInterests($memberID)
     {
         $sql = "SELECT interestID  
